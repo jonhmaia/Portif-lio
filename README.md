@@ -1,88 +1,308 @@
-# Portfolio Next.js
+# Portfolio - João Marcos
 
-Projeto de portfólio desenvolvido com Next.js, TypeScript, Supabase e Next-intl.
+Meu Portfólio profissional desenvolvido com Next.js 16, apresentando projetos, artigos técnicos e experiência profissional em desenvolvimento Full Stack e Inteligência Artificial.
 
-## Configuração de Variáveis de Ambiente
+## 📋 Sobre o Projeto
 
-Este projeto requer as seguintes variáveis de ambiente para funcionar corretamente:
+Este é um portfólio moderno e responsivo desenvolvido com as mais recentes tecnologias web, incluindo:
 
-### Variáveis Obrigatórias
+- **Interface multilingue** (Português e Inglês) com next-intl
+- **Sistema de blog** integrado com editor Markdown
+- **Galeria de projetos** com filtros por tecnologias e tags
+- **Painel administrativo** completo para gerenciamento de conteúdo
+- **SEO otimizado** com sitemap e metadados dinâmicos
+- **Arquitetura moderna** com Server Components e App Router
 
-1. **NEXT_PUBLIC_SUPABASE_URL** - URL do seu projeto Supabase
-   - Encontre esta URL em: https://supabase.com/dashboard/project/_/settings/api
-   - Exemplo: `https://xxxxxxxxxxxxx.supabase.co`
+---
 
-2. **NEXT_PUBLIC_SUPABASE_ANON_KEY** - Chave anônima (pública) do Supabase
-   - Encontre esta chave em: https://supabase.com/dashboard/project/_/settings/api
-   - Esta é a chave `anon` ou `public`
+## 👨‍💻 Sobre João Marcos
 
-### Variável Opcional (para operações admin)
+### Perfil Profissional
 
-3. **SUPABASE_SERVICE_ROLE_KEY** - Chave de serviço do Supabase (usada apenas server-side)
-   - Encontre esta chave em: https://supabase.com/dashboard/project/_/settings/api
-   - ⚠️ **IMPORTANTE**: Nunca exponha esta chave no cliente. Ela só deve ser usada em rotas de API server-side.
+Desenvolvedor Full Stack especializado em **Engenharia de Software** e **Inteligência Artificial**, com sólida experiência em desenvolvimento web moderno e automação de processos.
 
-## Configuração no Vercel
+**Formação:**
+- 🎓 Graduando em Engenharia de Software na **Universidade Federal de Goiás (UFG)**
+- 📚 Pesquisador em Sistemas Inteligentes com publicação no **JEMS (Joint Event on Microservices)**
+- 📍 Localização: Goiânia, GO, Brasil
 
-Para configurar as variáveis de ambiente no Vercel:
+### Experiência Profissional
 
-1. Acesse seu projeto no Vercel Dashboard
-2. Vá em **Settings** → **Environment Variables**
-3. Adicione as seguintes variáveis:
-   - `NEXT_PUBLIC_SUPABASE_URL` (valor: sua URL do Supabase)
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` (valor: sua chave anônima)
-   - `SUPABASE_SERVICE_ROLE_KEY` (valor: sua chave de serviço - opcional mas recomendado para funcionalidades admin)
+#### 🔷 Watrix Tecnologia (2024 - Atual)
+**Desenvolvedor Full Stack**
 
-4. Certifique-se de que as variáveis estão configuradas para os ambientes corretos:
-   - Production
-   - Preview (opcional)
-   - Development (opcional)
+- Desenvolvimento de sistemas web com React, Next.js e TypeScript
+- Implementação de integrações com APIs e automações com n8n
+- Criação de soluções com IA generativa e LLMs
+- Gestão de banco de dados PostgreSQL e Supabase
 
-5. Após adicionar as variáveis, você precisará fazer um novo deploy para que as mudanças tenham efeito.
+#### 🔷 Flex ON (2023 - 2024)
+**Desenvolvedor Full Stack**
 
-## Como Obter as Credenciais do Supabase
+- Desenvolvimento de plataformas web responsivas
+- Implementação de automações e integrações de sistemas
+- Otimização de performance e experiência do usuário
 
-1. Acesse https://supabase.com/dashboard
-2. Selecione seu projeto (ou crie um novo)
-3. Vá em **Settings** → **API**
-4. Na seção **Project API keys**, você encontrará:
-   - **Project URL** → Use como `NEXT_PUBLIC_SUPABASE_URL`
-   - **anon public** → Use como `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - **service_role** → Use como `SUPABASE_SERVICE_ROLE_KEY` (manter em segredo!)
+#### 🔷 CEIA - Centro de Empreendedorismo e Inovação (2022 - 2023)
+**Desenvolvedor Full Stack**
 
-## Configuração Local
+- Desenvolvimento de soluções web para empreendedores
+- Criação de dashboards e ferramentas de análise
+- Suporte técnico e manutenção de sistemas
 
-Para desenvolvimento local, crie um arquivo `.env.local` na raiz do projeto:
+### Projetos Destacados
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://xxxxxxxxxxxxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+#### 🎯 Maestro AI
+Plataforma de IA generativa para automação de processos
+- **Stack:** n8n, OpenAI, Supabase
+- Sistema completo de automação e geração de conteúdo
+
+#### 🎯 Camapum
+Plataforma web para gestão de projetos
+- **Stack:** React, Supabase, n8n
+- Interface moderna e responsiva com gestão completa de dados
+
+#### 🎯 Cashmed (Fintech)
+Solução financeira desenvolvida com Django
+- **Stack:** Python (Django), PostgreSQL
+- Sistema completo de gestão financeira
+
+### Competências Técnicas
+
+#### 💻 Desenvolvimento Full Stack
+- **Linguagens:** Python, TypeScript, JavaScript, C/C++, SQL
+- **Frontend:** React, Next.js, HTML5, CSS3, Tailwind CSS
+- **Backend:** Node.js, Django, Express.js
+- **Bancos de Dados:** PostgreSQL, MongoDB, Supabase
+
+#### 🤖 Inteligência Artificial & Automação
+- **IA Generativa:** LLM Fine-Tuning, NLP, RAG, Generative AI
+- **Automação:** n8n, RPA, Data Governance, Observability
+- **Integrações:** APIs RESTful, Webhooks, Automações
+
+#### 🛠️ Ferramentas & DevOps
+- **Controle de Versão:** Git, GitHub
+- **Containerização:** Docker
+- **CI/CD:** Pipelines de deploy automatizados
+- **Ferramentas:** VS Code, Bubble.io, Supabase
+
+#### 📊 Liderança & Estratégia
+- Liderança Técnica
+- Engenharia de Receita
+- Arquitetura de Software
+- Scrum/Agile
+
+### Idiomas
+- 🇧🇷 **Português:** Nativo
+- 🇺🇸 **Inglês:** Avançado
+
+---
+
+## 🛠️ Requisitos Técnicos
+
+### Tecnologias Principais
+
+| Categoria | Tecnologia | Versão |
+|-----------|-----------|--------|
+| **Framework** | Next.js | 16.1.3 |
+| **Runtime** | React | 19.2.3 |
+| **Linguagem** | TypeScript | ^5 |
+| **Styling** | Tailwind CSS | ^4 |
+| **Backend** | Supabase | ^2.90.1 |
+| **Internacionalização** | next-intl | ^4.7.0 |
+| **Formulários** | react-hook-form | ^7.71.1 |
+| **Validação** | Zod | ^4.3.5 |
+| **Estado** | TanStack Query | ^5.90.19 |
+| **UI Components** | Radix UI | ^1.x |
+
+### Principais Dependências
+
+#### Frontend
+```json
+{
+  "next": "16.1.3",
+  "react": "19.2.3",
+  "react-dom": "19.2.3",
+  "next-intl": "^4.7.0",
+  "tailwindcss": "^4",
+  "next-themes": "^0.4.6",
+  "lucide-react": "^0.562.0"
+}
 ```
 
-⚠️ **Não commite o arquivo `.env.local`** - ele já está no `.gitignore`.
+#### Backend & Database
+```json
+{
+  "@supabase/ssr": "^0.8.0",
+  "@supabase/supabase-js": "^2.90.1",
+  "@tanstack/react-query": "^5.90.19"
+}
+```
 
-## Troubleshooting
+#### Forms & Validation
+```json
+{
+  "react-hook-form": "^7.71.1",
+  "@hookform/resolvers": "^5.2.2",
+  "zod": "^4.3.5"
+}
+```
 
-Se você estiver vendo erros sobre variáveis de ambiente faltando:
+#### UI Components
+```json
+{
+  "@radix-ui/react-avatar": "^1.1.11",
+  "@radix-ui/react-dialog": "^1.1.15",
+  "@radix-ui/react-dropdown-menu": "^2.1.16",
+  "@radix-ui/react-select": "^2.2.6",
+  "@radix-ui/react-tabs": "^1.1.13"
+}
+```
 
-1. Verifique se as variáveis estão configuradas corretamente no Vercel
-2. Certifique-se de que fez um novo deploy após adicionar as variáveis
-3. Verifique se os nomes das variáveis estão corretos (case-sensitive)
-4. Para variáveis `NEXT_PUBLIC_*`, certifique-se de que elas estão acessíveis no cliente (isso é automático no Next.js)
+#### Content & Markdown
+```json
+{
+  "react-markdown": "^10.1.0",
+  "remark-gfm": "^4.0.1",
+  "rehype-highlight": "^7.0.2"
+}
+```
 
-## Desenvolvimento
+### Requisitos de Sistema
+
+- **Node.js:** 18.x ou superior
+- **npm:** 9.x ou superior
+- **Banco de Dados:** PostgreSQL (via Supabase)
+- **Deploy:** Vercel (recomendado) ou similar
+
+---
+
+### Instalação
 
 ```bash
-# Instalar dependências
+# Clone o repositório
+git clone <repository-url>
+
+# Instale as dependências
 npm install
 
-# Rodar em desenvolvimento
+# Configure as variáveis de ambiente
+cp .env.example .env.local
+# Edite .env.local com suas credenciais do Supabase
+
+# Execute o banco de dados (migrações do Supabase)
+# Certifique-se de que o Supabase está configurado e as migrações foram aplicadas
+
+# Inicie o servidor de desenvolvimento
 npm run dev
-
-# Build para produção
-npm run build
-
-# Iniciar produção
-npm start
 ```
+
+### Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+npm run dev          # Inicia servidor de desenvolvimento na porta 3000
+
+# Build
+npm run build        # Cria build de produção otimizado
+
+# Produção
+npm start            # Inicia servidor de produção
+
+# Linting
+npm run lint         # Executa ESLint
+```
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+portfolio-nextjs/
+├── src/
+│   ├── app/                    # App Router do Next.js
+│   │   ├── [locale]/          # Rotas internacionalizadas
+│   │   │   ├── (public)/      # Rotas públicas
+│   │   │   │   ├── blog/      # Blog e artigos
+│   │   │   │   ├── projetos/  # Galeria de projetos
+│   │   │   │   └── ...
+│   │   │   └── (admin)/       # Painel administrativo
+│   │   └── api/               # API Routes
+│   ├── components/            # Componentes React
+│   │   ├── admin/            # Componentes do admin
+│   │   ├── blog/             # Componentes do blog
+│   │   ├── layout/           # Header, Footer, etc.
+│   │   └── ui/               # Componentes UI reutilizáveis
+│   ├── lib/                  # Utilitários e configurações
+│   │   ├── supabase/         # Cliente Supabase
+│   │   ├── types/            # Tipos TypeScript
+│   │   └── validations/      # Schemas Zod
+│   ├── messages/             # Traduções (i18n)
+│   └── i18n/                 # Configuração de internacionalização
+├── public/                   # Arquivos estáticos
+├── supabase/
+│   └── migrations/           # Migrações do banco de dados
+└── package.json
+```
+
+---
+
+## 🚀 Deploy
+
+### Vercel (Recomendado)
+
+1. Conecte seu repositório ao Vercel
+2. Configure as variáveis de ambiente no dashboard
+3. Deploy automático a cada push
+
+### Configuração no Vercel
+
+1. Acesse **Settings** → **Environment Variables**
+2. Adicione:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY` (opcional)
+3. Faça o deploy
+
+---
+
+## 📚 Funcionalidades
+
+### Públicas
+- ✅ Portfólio de projetos com filtros
+- ✅ Blog com artigos técnicos
+- ✅ Sistema de tags e categorias
+- ✅ Página de currículo
+- ✅ Contato e links sociais
+- ✅ SEO otimizado (sitemap, robots.txt, metadados)
+
+### Administrativas
+- ✅ CRUD completo de projetos
+- ✅ CRUD completo de artigos (Markdown)
+- ✅ Gestão de categorias e tags
+- ✅ Gestão de tecnologias
+- ✅ Upload de imagens (Supabase Storage)
+- ✅ Sistema de traduções (PT-BR / EN)
+- ✅ Autenticação e autorização
+
+---
+
+## 📄 Licença
+
+Este projeto é privado e de propriedade de João Marcos.
+
+---
+
+## 📞 Contato
+
+- **Email:** joaomaia@discente.ufg.br
+- **Telefone:** (62) 99901-8119
+- **LinkedIn:** [linkedin.com/in/joaomarcosmaia](https://www.linkedin.com/in/joaomarcosmaia)
+- **GitHub:** [github.com/jonhmaia](https://github.com/jonhmaia)
+- **Localização:** Goiânia, GO, Brasil
+
+---
+
+## 🙏 Agradecimentos
+
+Projeto desenvolvido com as melhores práticas de desenvolvimento web moderno, utilizando tecnologias de ponta e seguindo padrões de código limpo e arquitetura escalável.
