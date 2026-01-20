@@ -3,8 +3,9 @@
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Menu, Sun, Moon } from 'lucide-react'
-import { useState, Suspense } from 'react'
+import { useState, Suspense, useEffect } from 'react'
 import { useTheme } from 'next-themes'
+import { motion, useScroll } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
@@ -15,9 +16,17 @@ function HeaderContent() {
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
   const [open, setOpen] = useState(false)
+  const { scrollY } = useScroll()
+  const [isScrolled, setIsScrolled] = useState(false)
   const tNav = useTranslations('nav')
   const tActions = useTranslations('actions')
   const tA11y = useTranslations('a11y')
+
+  useEffect(() => {
+    return scrollY.on('change', (latest) => {
+      setIsScrolled(latest > 50)
+    })
+  }, [scrollY])
 
   const navigation = [
     { name: tNav('home'), href: '/' },
@@ -27,38 +36,65 @@ function HeaderContent() {
     { name: tNav('contact'), href: '/contact' },
   ]
 
+  // Styles controlled by state for smooth transition
+  const bgClass = isScrolled 
+    ? "bg-background/80 backdrop-blur-md border-b border-border/40 shadow-sm supports-[backdrop-filter]:bg-background/60" 
+    : "bg-transparent border-b border-transparent"
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+    <motion.header 
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 flex items-center h-16 transition-all duration-300 ease-in-out px-4 md:px-8",
+        bgClass
+      )}
+      initial={false}
+    >
+      <div className="flex w-full items-center justify-between max-w-7xl mx-auto">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 font-bold text-xl hover:opacity-90 transition-opacity">
-          <div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/20 shadow-sm">
+        <Link href="/" className="flex items-center gap-3 font-bold text-xl group">
+          <motion.div 
+            className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/20 shadow-sm"
+            whileHover={{ scale: 1.1, rotate: 10 }}
+            transition={{ type: "spring", stiffness: 300, damping: 10 }}
+          >
             <Image
               src="/foto.png"
               alt="João Marcos"
               fill
               className="object-cover"
             />
-          </div>
-          <span className="hidden sm:inline-block tracking-tight">João Marcos</span>
+          </motion.div>
+          <span className="hidden sm:inline-block tracking-tight group-hover:text-primary transition-colors">
+            João Marcos
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-1">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href as any}
-              className={cn(
-                'px-4 py-2 text-sm font-medium rounded-md transition-colors',
-                pathname === item.href
-                  ? 'bg-accent text-accent-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
+          {navigation.map((item) => {
+            const isActive = pathname === item.href
+            return (
+              <Link
+                key={item.name}
+                href={item.href as any}
+                className="relative px-4 py-2 text-sm font-medium transition-colors"
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute inset-0 bg-primary/10 rounded-full"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <span className={cn(
+                  "relative z-10 transition-colors",
+                  isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                )}>
+                  {item.name}
+                </span>
+              </Link>
+            )
+          })}
         </nav>
 
         {/* Actions */}
@@ -71,7 +107,7 @@ function HeaderContent() {
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="h-9 w-9"
+            className="h-9 w-9 rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
           >
             <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -86,7 +122,7 @@ function HeaderContent() {
                 <span className="sr-only">Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[280px] sm:w-[350px]">
+            <SheetContent side="right" className="w-[280px] sm:w-[350px] backdrop-blur-xl bg-background/90 border-l border-border/40">
               <SheetTitle className="sr-only">{tA11y('navigationMenu')}</SheetTitle>
               <nav className="flex flex-col gap-2 mt-8">
                 {navigation.map((item) => (
@@ -95,10 +131,10 @@ function HeaderContent() {
                     href={item.href as any}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      'px-4 py-3 text-base font-medium rounded-lg transition-colors',
+                      'px-4 py-3 text-base font-medium rounded-lg transition-all duration-200',
                       pathname === item.href
-                        ? 'bg-accent text-accent-foreground'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
+                        ? 'bg-primary/10 text-primary translate-x-2'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:translate-x-1'
                     )}
                   >
                     {item.name}
@@ -109,7 +145,7 @@ function HeaderContent() {
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   )
 }
 
@@ -123,8 +159,8 @@ export function Header() {
 
 function HeaderSkeleton() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur h-16">
-      <div className="container flex h-16 items-center justify-between">
+    <div className="h-16 w-full fixed top-0 z-50 flex items-center justify-center px-4 md:px-8 pointer-events-none">
+       <div className="w-full h-16 flex items-center justify-between border-b border-border/10 bg-background/50 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <div className="h-9 w-9 rounded-lg bg-muted animate-pulse" />
           <div className="h-6 w-24 rounded bg-muted animate-pulse hidden sm:block" />
@@ -139,6 +175,6 @@ function HeaderSkeleton() {
           <div className="h-9 w-9 rounded bg-muted animate-pulse" />
         </div>
       </div>
-    </header>
+    </div>
   )
 }

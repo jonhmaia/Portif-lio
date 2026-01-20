@@ -206,6 +206,10 @@
       "emailPlaceholder": "you@email.com",
       "whatsappLabel": "WhatsApp *",
       "whatsappPlaceholder": "(00) 00000-0000",
+      "subjectLabel": "Subject *",
+      "subjectPlaceholder": "What do you want to talk about?",
+      "messageLabel": "Message *",
+      "messagePlaceholder": "Your message here...",
       "sending": "Sending...",
       "submit": "Send Message"
     }
@@ -260,7 +264,9 @@
     "contact": {
       "nameMin": "Name must be at least 2 characters",
       "emailInvalid": "Invalid email",
-      "whatsappMin": "WhatsApp must be at least 10 characters"
+      "whatsappMin": "WhatsApp must be at least 10 characters",
+      "subjectMin": "Subject must be at least 5 characters",
+      "messageMin": "Message must be at least 10 characters"
     }
   }
 }

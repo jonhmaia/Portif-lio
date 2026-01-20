@@ -36,22 +36,6 @@ export const metadata: Metadata = {
   keywords: ["desenvolvedor", "full stack", "react", "node.js", "python", "portfolio", "web development"],
   authors: [{ name: "João Marcos" }],
   creator: "João Marcos",
-  icons: {
-    icon: [
-      {
-        url: '/icon',
-        type: 'image/png',
-        sizes: '32x32',
-      },
-    ],
-    apple: [
-      {
-        url: '/apple-icon',
-        type: 'image/png',
-        sizes: '180x180',
-      },
-    ],
-  },
   openGraph: {
     type: "website",
     locale: "pt_BR",

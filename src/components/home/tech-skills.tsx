@@ -3,18 +3,9 @@
 import Image from 'next/image'
 import { 
   Database, 
-  Server, 
   Github, 
-  Code2, 
-  Cpu, 
-  Globe, 
-  Layout, 
-  Box, 
-  Workflow, 
-  Terminal,
-  Layers,
-  Zap
 } from 'lucide-react'
+import { SpotlightCard } from '@/components/ui/spotlight-card'
 
 // Simple SVG Icons for skills without images
 const SupabaseIcon = () => (
@@ -69,34 +60,34 @@ export function TechSkills() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {skills.map((skill) => (
-            <div 
+            <SpotlightCard 
               key={skill.name}
-              className="group relative flex flex-col items-center justify-center p-6 h-32 rounded-xl bg-[#1A1F2B]/80 border border-white/5 hover:border-primary/20 hover:bg-[#1A1F2B] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
+              className="h-32 bg-card/10 backdrop-blur-sm border-white/5 hover:border-primary/50 transition-colors"
+              spotlightColor="rgba(37, 99, 235, 0.25)"
             >
-              {/* Icon Container */}
-              <div className="mb-3 relative w-10 h-10 flex items-center justify-center text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-                {skill.imageSrc ? (
-                  <div className="relative w-full h-full">
-                    <Image 
-                      src={skill.imageSrc} 
-                      alt={skill.name}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                ) : (
-                  skill.icon && <skill.icon className="w-8 h-8" />
-                )}
+              <div className="relative z-20 flex flex-col items-center justify-center h-full p-4">
+                {/* Icon Container */}
+                <div className="mb-3 relative w-10 h-10 flex items-center justify-center text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                  {skill.imageSrc ? (
+                    <div className="relative w-full h-full">
+                      <Image 
+                        src={skill.imageSrc} 
+                        alt={skill.name}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  ) : (
+                    skill.icon && <skill.icon className="w-8 h-8" />
+                  )}
+                </div>
+                
+                {/* Skill Name */}
+                <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">
+                  {skill.name}
+                </span>
               </div>
-              
-              {/* Skill Name */}
-              <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">
-                {skill.name}
-              </span>
-
-              {/* Glow Effect on Hover */}
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
+            </SpotlightCard>
           ))}
         </div>
       </div>
