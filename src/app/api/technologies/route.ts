@@ -51,11 +51,11 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const validatedData = technologySchema.parse(body)
 
-    const { data, error } = await supabase
+    const { data, error } = await (supabase
       .from('technologies')
-      .insert(validatedData)
+      .insert(validatedData as any)
       .select()
-      .single()
+      .single() as any)
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })

@@ -48,12 +48,12 @@ export async function PUT(
     const body = await request.json()
     const validatedData = technologyUpdateSchema.parse(body)
 
-    const { data, error } = await supabase
-      .from('technologies')
+    const { data, error } = await ((supabase
+      .from('technologies') as any)
       .update(validatedData)
       .eq('id', id)
       .select()
-      .single()
+      .single())
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })

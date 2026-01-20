@@ -195,7 +195,7 @@ export function ArticleForm({ article, categories, tags, projects }: ArticleForm
   }
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: {
       slug: article?.slug || '',
       cover_image_url: article?.cover_image_url || '',
@@ -228,7 +228,7 @@ export function ArticleForm({ article, categories, tags, projects }: ArticleForm
     )
   }
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormData): Promise<void> => {
     setIsSubmitting(true)
 
     try {

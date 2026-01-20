@@ -41,17 +41,25 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     return { title: locale === 'en' ? 'Article not found' : 'Artigo não encontrado' }
   }
 
-  const translations = (article.translations || []) as Array<{ language: string; title?: string; meta_description?: string | null; summary?: string | null }>
+  const articleData = article as {
+    title: string
+    summary: string | null
+    meta_description: string | null
+    cover_image_url: string | null
+    translations?: Array<{ language: string; title?: string; meta_description?: string | null; summary?: string | null }>
+  }
+
+  const translations = (articleData.translations || []) as Array<{ language: string; title?: string; meta_description?: string | null; summary?: string | null }>
   const ptTranslation = translations.find((tr) => tr.language === 'pt-BR')
   const enTranslation = translations.find((tr) => tr.language === 'en')
   const currentTranslation = locale === 'en' ? enTranslation || ptTranslation : ptTranslation
 
-  const title = currentTranslation?.title || article.title
+  const title = currentTranslation?.title || articleData.title
   const description =
     currentTranslation?.meta_description ||
     currentTranslation?.summary ||
-    article.meta_description ||
-    article.summary ||
+    articleData.meta_description ||
+    articleData.summary ||
     ''
 
   return {
@@ -61,13 +69,13 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       title,
       description,
       type: 'article',
-      images: article.cover_image_url ? [article.cover_image_url] : [],
+      images: articleData.cover_image_url ? [articleData.cover_image_url] : [],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: article.cover_image_url ? [article.cover_image_url] : [],
+      images: articleData.cover_image_url ? [articleData.cover_image_url] : [],
     },
   }
 }
@@ -101,11 +109,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound()
   }
 
+  // Type assertion for the data
+  const typedArticleData = articleData as any
+
   // Transform the data
   const article = {
-    ...articleData,
-    tags: (articleData.tags as Array<{ tag: unknown }> | null)?.map((at) => at.tag).filter(Boolean) || [],
-    projects: (articleData.projects as Array<{ project: unknown }> | null)?.map((ap) => ap.project).filter(Boolean) || [],
+    ...typedArticleData,
+    tags: (typedArticleData.tags as Array<{ tag: unknown }> | null)?.map((at) => at.tag).filter(Boolean) || [],
+    projects: (typedArticleData.projects as Array<{ project: unknown }> | null)?.map((ap) => ap.project).filter(Boolean) || [],
   }
 
   const translations = (article.translations || []) as Array<{ language: string; title?: string; summary?: string | null; content?: string; meta_description?: string | null }>
@@ -132,7 +143,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   // Increment view count
-  await supabase.rpc('increment_article_views', { article_id: article.id })
+  await (supabase.rpc as any)('increment_article_views', { article_id: article.id })
 
   const authorInitials = article.author?.full_name
     ?.split(' ')
@@ -231,7 +242,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         {article.tags && article.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-10">
             {article.tags.map((tag: any) => (
-              <Link key={tag.id} href={`/blog?tag=${tag.slug}`}>
+              <Link key={tag.id} href={`/blog?tag=${tag.slug}` as any}>
                 <Badge variant="secondary" className="hover:bg-accent">
                   #{tag.name}
                 </Badge>
@@ -253,7 +264,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <h2 className="text-2xl font-bold mb-6">Projetos Relacionados</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {article.projects.map((project: any) => (
-                <Link key={project.id} href={`/projetos/${project.slug}`}>
+                <Link key={project.id} href={`/projetos/${project.slug}` as any}>
                   <Card className="hover:shadow-md transition-shadow">
                     <CardContent className="p-4 flex items-center gap-4">
                       {project.cover_image_url && (

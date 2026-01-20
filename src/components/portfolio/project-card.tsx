@@ -61,7 +61,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       <CardHeader className="pb-3">
-        <Link href={`/projetos/${project.slug}`}>
+        <Link href={`/projetos/${project.slug}` as any}>
           <h3 className="text-xl font-bold hover:text-primary transition-colors line-clamp-1">
             {project.title}
           </h3>

@@ -30,7 +30,9 @@ export async function GET(
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    const translations = (data.translations || []) as CategoryTranslation[]
+    const typedData = data as any
+
+    const translations = (typedData.translations || []) as CategoryTranslation[]
     const ptTranslation = translations.find((t) => t.language === 'pt-BR')
     const enTranslation = translations.find((t) => t.language === 'en')
     const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
@@ -38,7 +40,7 @@ export async function GET(
     if (include_translations) {
       return NextResponse.json({
         data: {
-          ...data,
+          ...typedData,
           translations: {
             pt: ptTranslation || null,
             en: enTranslation || null,
@@ -48,9 +50,9 @@ export async function GET(
     } else {
       return NextResponse.json({
         data: {
-          ...data,
-          name: currentTranslation?.name || data.name,
-          description: currentTranslation?.description || data.description,
+          ...typedData,
+          name: currentTranslation?.name || typedData.name,
+          description: currentTranslation?.description || typedData.description,
         },
       })
     }
@@ -83,8 +85,8 @@ export async function PUT(
     }
 
     // Update the category with PT name
-    const { data, error } = await supabase
-      .from('categories')
+    const { data, error } = await ((supabase
+      .from('categories') as any)
       .update({
         ...categoryData,
         name: translations.pt.name,
@@ -92,14 +94,14 @@ export async function PUT(
       })
       .eq('id', id)
       .select()
-      .single()
+      .single())
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
     // Update PT-BR translation (upsert)
-    await supabase.from('category_translations').upsert({
+    await (supabase.from('category_translations') as any).upsert({
       category_id: parseInt(id),
       language: 'pt-BR',
       name: translations.pt.name,
@@ -108,7 +110,7 @@ export async function PUT(
 
     // Handle EN translation
     if (translations.en?.name) {
-      await supabase.from('category_translations').upsert({
+      await (supabase.from('category_translations') as any).upsert({
         category_id: parseInt(id),
         language: 'en',
         name: translations.en.name,
@@ -144,10 +146,10 @@ export async function DELETE(
     }
 
     // Check if category is used by any article
-    const { count } = await supabase
+    const { count } = await ((supabase
       .from('articles')
       .select('*', { count: 'exact', head: true })
-      .eq('category_id', id)
+      .eq('category_id', id)) as any)
 
     if (count && count > 0) {
       return NextResponse.json(

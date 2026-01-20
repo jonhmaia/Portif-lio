@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    const tags = data?.map((tag) => {
+    const tags = (data as any)?.map((tag: any) => {
       const translations = (tag.translations || []) as TagTranslation[]
       const ptTranslation = translations.find((t) => t.language === 'pt-BR')
       const enTranslation = translations.find((t) => t.language === 'en')
@@ -84,16 +84,16 @@ export async function POST(request: NextRequest) {
     }
 
     // Add PT-BR translation
-    await supabase.from('tag_translations').insert({
-      tag_id: data.id,
+    await (supabase.from('tag_translations') as any).insert({
+      tag_id: (data as any).id,
       language: 'pt-BR',
       name: translations.pt.name,
     })
 
     // Add EN translation if provided
     if (translations.en?.name) {
-      await supabase.from('tag_translations').insert({
-        tag_id: data.id,
+      await (supabase.from('tag_translations') as any).insert({
+        tag_id: (data as any).id,
         language: 'en',
         name: translations.en.name,
       })

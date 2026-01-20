@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Transform the data
-    const articles = data?.map((article: ArticleQueryResponse) => {
+    const articles = (data as any)?.map((article: any) => {
       const translations = (article.translations || []) as ArticleTranslation[]
       const ptTranslation = translations.find((t) => t.language === 'pt-BR')
       const enTranslation = translations.find((t) => t.language === 'en')
@@ -57,8 +57,8 @@ export async function GET(request: NextRequest) {
 
       const baseArticle = {
         ...article,
-        tags: article.tags?.map((at) => at.tag).filter((t): t is Tag => t !== null) || [],
-        projects: article.projects?.map((ap) => ap.project).filter((p) => p !== null) || [],
+        tags: (article.tags as any)?.map((at: any) => at.tag).filter((t: any): t is Tag => t !== null) || [],
+        projects: (article.projects as any)?.map((ap: any) => ap.project).filter((p: any) => p !== null) || [],
       }
 
       if (include_translations) {
@@ -84,8 +84,8 @@ export async function GET(request: NextRequest) {
     // Filter by tag if specified
     let filteredArticles = articles
     if (tag) {
-      filteredArticles = filteredArticles?.filter((a) =>
-        a.tags?.some((t) => t.slug === tag)
+      filteredArticles = filteredArticles?.filter((a: any) =>
+        a.tags?.some((t: any) => t.slug === tag)
       )
     }
 
@@ -145,8 +145,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Add PT-BR translation
-    await supabase.from('article_translations').insert({
-      article_id: article.id,
+    await (supabase.from('article_translations') as any).insert({
+      article_id: (article as any).id,
       language: 'pt-BR',
       title: translations.pt.title,
       content: translations.pt.content,
@@ -157,8 +157,8 @@ export async function POST(request: NextRequest) {
 
     // Add EN translation if provided
     if (translations.en?.title && translations.en?.content) {
-      await supabase.from('article_translations').insert({
-        article_id: article.id,
+      await (supabase.from('article_translations') as any).insert({
+        article_id: (article as any).id,
         language: 'en',
         title: translations.en.title,
         content: translations.en.content,
@@ -171,7 +171,7 @@ export async function POST(request: NextRequest) {
     // Add tags if provided
     if (tag_ids && tag_ids.length > 0) {
       const articleTags = tag_ids.map((tag_id: number) => ({
-        article_id: article.id,
+        article_id: (article as any).id,
         tag_id,
       }))
       await supabase.from('article_tags').insert(articleTags)
@@ -180,7 +180,7 @@ export async function POST(request: NextRequest) {
     // Add related projects if provided
     if (project_ids && project_ids.length > 0) {
       const articleProjects = project_ids.map((project_id: number) => ({
-        article_id: article.id,
+        article_id: (article as any).id,
         project_id,
       }))
       await supabase.from('article_projects').insert(articleProjects)

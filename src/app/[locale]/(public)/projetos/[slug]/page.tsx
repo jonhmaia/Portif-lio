@@ -38,13 +38,20 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     return { title: 'Projeto não encontrado' }
   }
 
+  const projectData = project as {
+    title: string
+    short_description: string | null
+    meta_description: string | null
+    cover_image_url: string | null
+  }
+
   return {
-    title: project.title,
-    description: project.meta_description || project.short_description || '',
+    title: projectData.title,
+    description: projectData.meta_description || projectData.short_description || '',
     openGraph: {
-      title: project.title,
-      description: project.meta_description || project.short_description || '',
-      images: project.cover_image_url ? [project.cover_image_url] : [],
+      title: projectData.title,
+      description: projectData.meta_description || projectData.short_description || '',
+      images: projectData.cover_image_url ? [projectData.cover_image_url] : [],
     },
   }
 }
@@ -74,16 +81,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound()
   }
 
+  const typedProjectData = projectData as any
+
   // Transform the data
   const project = {
-    ...projectData,
-    technologies: (projectData.technologies as Array<{ technology: unknown }> | null)?.map((pt) => pt.technology).filter(Boolean) || [],
-    tags: (projectData.tags as Array<{ tag: unknown }> | null)?.map((pt) => pt.tag).filter(Boolean) || [],
-    images: projectData.images || [],
+    ...typedProjectData,
+    technologies: (typedProjectData.technologies as Array<{ technology: unknown }> | null)?.map((pt) => pt.technology).filter(Boolean) || [],
+    tags: (typedProjectData.tags as Array<{ tag: unknown }> | null)?.map((pt) => pt.tag).filter(Boolean) || [],
+    images: typedProjectData.images || [],
   }
 
   // Increment view count
-  await supabase.rpc('increment_project_views', { project_id: project.id })
+  await (supabase.rpc as any)('increment_project_views', { project_id: project.id })
 
   const statusLabels = {
     dev: 'Em Desenvolvimento',

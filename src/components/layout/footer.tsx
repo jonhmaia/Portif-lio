@@ -103,7 +103,7 @@ export function Footer() {
                 {section.links.map((link) => (
                   <li key={link.name}>
                     <Link
-                      href={link.href}
+                      href={link.href as any}
                       className="group relative text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 inline-block"
                     >
                       <span className="relative z-10">{link.name}</span>

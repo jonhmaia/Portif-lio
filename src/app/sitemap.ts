@@ -45,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .select('slug, updated_at')
     .eq('is_active', true)
 
-  const projectPages: MetadataRoute.Sitemap = (projects || []).map((project) => ({
+  const projectPages: MetadataRoute.Sitemap = ((projects as any) || []).map((project: { slug: string; updated_at: string }) => ({
     url: `${baseUrl}/portfolio/${project.slug}`,
     lastModified: new Date(project.updated_at),
     changeFrequency: 'monthly' as const,
@@ -58,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .select('slug, updated_at')
     .eq('status', 'published')
 
-  const articlePages: MetadataRoute.Sitemap = (articles || []).map((article) => ({
+  const articlePages: MetadataRoute.Sitemap = ((articles as any) || []).map((article: { slug: string; updated_at: string }) => ({
     url: `${baseUrl}/blog/${article.slug}`,
     lastModified: new Date(article.updated_at),
     changeFrequency: 'monthly' as const,

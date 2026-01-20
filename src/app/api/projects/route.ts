@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Transform the data to flatten relations and handle translations
-    const projects = data?.map((project: ProjectQueryResponse) => {
+    const projects = (data as any)?.map((project: any) => {
       const translations = (project.translations || []) as ProjectTranslation[]
       const ptTranslation = translations.find((t) => t.language === 'pt-BR')
       const enTranslation = translations.find((t) => t.language === 'en')
@@ -62,8 +62,8 @@ export async function GET(request: NextRequest) {
 
       const baseProject = {
         ...project,
-        technologies: project.technologies?.map((pt) => pt.technology).filter((t): t is Technology => t !== null) || [],
-        tags: project.tags?.map((pt) => pt.tag).filter((t): t is Tag => t !== null) || [],
+        technologies: (project.technologies as any)?.map((pt: any) => pt.technology).filter((t: any): t is Technology => t !== null) || [],
+        tags: (project.tags as any)?.map((pt: any) => pt.tag).filter((t: any): t is Tag => t !== null) || [],
       }
 
       if (include_translations) {
@@ -91,13 +91,13 @@ export async function GET(request: NextRequest) {
     // Filter by technology or tag if specified (post-query filtering)
     let filteredProjects = projects
     if (technology) {
-      filteredProjects = filteredProjects?.filter((p) => 
-        p.technologies?.some((t) => t.slug === technology)
+      filteredProjects = filteredProjects?.filter((p: any) => 
+        p.technologies?.some((t: any) => t.slug === technology)
       )
     }
     if (tag) {
-      filteredProjects = filteredProjects?.filter((p) => 
-        p.tags?.some((t) => t.slug === tag)
+      filteredProjects = filteredProjects?.filter((p: any) => 
+        p.tags?.some((t: any) => t.slug === tag)
       )
     }
 
@@ -152,8 +152,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Add PT-BR translation
-    await supabase.from('project_translations').insert({
-      project_id: project.id,
+    await (supabase.from('project_translations') as any).insert({
+      project_id: (project as any).id,
       language: 'pt-BR',
       title: translations.pt.title,
       subtitle: translations.pt.subtitle || null,
@@ -164,8 +164,8 @@ export async function POST(request: NextRequest) {
 
     // Add EN translation if provided
     if (translations.en?.title) {
-      await supabase.from('project_translations').insert({
-        project_id: project.id,
+      await (supabase.from('project_translations') as any).insert({
+        project_id: (project as any).id,
         language: 'en',
         title: translations.en.title,
         subtitle: translations.en.subtitle || null,
@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
     // Add technologies if provided
     if (technology_ids && technology_ids.length > 0) {
       const projectTechnologies = technology_ids.map((tech_id: number) => ({
-        project_id: project.id,
+        project_id: (project as any).id,
         technology_id: tech_id,
       }))
       await supabase.from('project_technologies').insert(projectTechnologies)
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
     // Add tags if provided
     if (tag_ids && tag_ids.length > 0) {
       const projectTags = tag_ids.map((tag_id: number) => ({
-        project_id: project.id,
+        project_id: (project as any).id,
         tag_id,
       }))
       await supabase.from('project_tags').insert(projectTags)

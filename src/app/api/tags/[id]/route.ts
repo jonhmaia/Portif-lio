@@ -30,7 +30,9 @@ export async function GET(
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    const translations = (data.translations || []) as TagTranslation[]
+    const typedData = data as any
+
+    const translations = (typedData.translations || []) as TagTranslation[]
     const ptTranslation = translations.find((t) => t.language === 'pt-BR')
     const enTranslation = translations.find((t) => t.language === 'en')
     const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
@@ -38,7 +40,7 @@ export async function GET(
     if (include_translations) {
       return NextResponse.json({
         data: {
-          ...data,
+          ...typedData,
           translations: {
             pt: ptTranslation || null,
             en: enTranslation || null,
@@ -48,8 +50,8 @@ export async function GET(
     } else {
       return NextResponse.json({
         data: {
-          ...data,
-          name: currentTranslation?.name || data.name,
+          ...typedData,
+          name: currentTranslation?.name || typedData.name,
         },
       })
     }
@@ -82,22 +84,22 @@ export async function PUT(
     }
 
     // Update the tag with PT name
-    const { data, error } = await supabase
-      .from('tags')
+    const { data, error } = await ((supabase
+      .from('tags') as any)
       .update({
         ...tagData,
         name: translations.pt.name,
       })
       .eq('id', id)
       .select()
-      .single()
+      .single())
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
     // Update PT-BR translation (upsert)
-    await supabase.from('tag_translations').upsert({
+    await (supabase.from('tag_translations') as any).upsert({
       tag_id: parseInt(id),
       language: 'pt-BR',
       name: translations.pt.name,
@@ -105,17 +107,17 @@ export async function PUT(
 
     // Handle EN translation
     if (translations.en?.name) {
-      await supabase.from('tag_translations').upsert({
+      await (supabase.from('tag_translations') as any).upsert({
         tag_id: parseInt(id),
         language: 'en',
         name: translations.en.name,
       }, { onConflict: 'tag_id,language' })
     } else {
-      await supabase
+      await (supabase
         .from('tag_translations')
         .delete()
         .eq('tag_id', id)
-        .eq('language', 'en')
+        .eq('language', 'en') as any)
     }
 
     return NextResponse.json({ data })

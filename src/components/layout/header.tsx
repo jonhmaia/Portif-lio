@@ -48,7 +48,7 @@ function HeaderContent() {
           {navigation.map((item) => (
             <Link
               key={item.name}
-              href={item.href}
+              href={item.href as any}
               className={cn(
                 'px-4 py-2 text-sm font-medium rounded-md transition-colors',
                 pathname === item.href
@@ -92,7 +92,7 @@ function HeaderContent() {
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
-                    href={item.href}
+                    href={item.href as any}
                     onClick={() => setOpen(false)}
                     className={cn(
                       'px-4 py-3 text-base font-medium rounded-lg transition-colors',

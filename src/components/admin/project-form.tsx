@@ -79,20 +79,32 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
   const isEditing = !!project
 
   // Extrair traduções existentes ou usar dados legados
-  const existingPtTranslation = project?.translations?.pt || {
+  const existingPtTranslation: any = project?.translations?.pt ? {
+    title: project.translations.pt.title,
+    subtitle: project.translations.pt.subtitle ?? undefined,
+    short_description: project.translations.pt.short_description ?? undefined,
+    full_description: project.translations.pt.full_description ?? undefined,
+    meta_description: project.translations.pt.meta_description ?? undefined,
+  } : {
     title: project?.title || '',
-    subtitle: project?.subtitle || '',
-    short_description: project?.short_description || '',
-    full_description: project?.full_description || '',
-    meta_description: project?.meta_description || '',
+    subtitle: project?.subtitle ?? undefined,
+    short_description: project?.short_description ?? undefined,
+    full_description: project?.full_description ?? undefined,
+    meta_description: project?.meta_description ?? undefined,
   }
 
-  const existingEnTranslation = project?.translations?.en || {
+  const existingEnTranslation: any = project?.translations?.en ? {
+    title: project.translations.en.title,
+    subtitle: project.translations.en.subtitle ?? undefined,
+    short_description: project.translations.en.short_description ?? undefined,
+    full_description: project.translations.en.full_description ?? undefined,
+    meta_description: project.translations.en.meta_description ?? undefined,
+  } : {
     title: '',
-    subtitle: '',
-    short_description: '',
-    full_description: '',
-    meta_description: '',
+    subtitle: undefined,
+    short_description: undefined,
+    full_description: undefined,
+    meta_description: undefined,
   }
 
   const form = useForm<FormData>({
@@ -133,7 +145,7 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
     )
   }
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormData): Promise<void> => {
     setIsSubmitting(true)
 
     try {
@@ -266,7 +278,7 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+    <form onSubmit={form.handleSubmit(onSubmit as any)} className="space-y-8">
       {/* Actions Bar */}
       <div className="flex items-center justify-between">
         <Button variant="ghost" asChild>

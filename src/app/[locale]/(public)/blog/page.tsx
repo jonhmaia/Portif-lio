@@ -43,7 +43,7 @@ async function ArticlesGrid({ category, tag }: { category?: string; tag?: string
 
   // Transform and filter articles
   let articles =
-    articlesData?.map((article) => {
+    (articlesData as any)?.map((article: any) => {
       const translations = (article.translations || []) as Array<{ language: string; title?: string; summary?: string; content?: string; meta_description?: string }>
       const ptTranslation = translations.find((tr) => tr.language === 'pt-BR')
       const enTranslation = translations.find((tr) => tr.language === 'en')
@@ -56,23 +56,23 @@ async function ArticlesGrid({ category, tag }: { category?: string; tag?: string
 
       return {
         ...article,
-        tags: article.tags?.map((at: { tag: { slug?: string } | null }) => at.tag).filter(Boolean) || [],
-        title: currentTranslation?.title || article.title,
-        summary: currentTranslation?.summary || article.summary,
-        content: currentTranslation?.content || article.content,
-        meta_description: currentTranslation?.meta_description || article.meta_description,
+        tags: (article.tags as any)?.map((at: { tag: { slug?: string } | null }) => at.tag).filter(Boolean) || [],
+        title: currentTranslation?.title || (article as any).title,
+        summary: currentTranslation?.summary || (article as any).summary,
+        content: currentTranslation?.content || (article as any).content,
+        meta_description: currentTranslation?.meta_description || (article as any).meta_description,
         category: article.category
           ? {
               ...article.category,
-              name: currentCategory?.name || article.category.name,
-              description: currentCategory?.description || article.category.description,
+              name: currentCategory?.name || (article.category as any).name,
+              description: currentCategory?.description || (article.category as any).description,
             }
           : null,
       }
     }) || []
 
   if (tag) {
-    articles = articles.filter((a) =>
+    articles = articles.filter((a: any) =>
       a.tags?.some((t: { slug?: string }) => t.slug === tag)
     )
   }
@@ -93,7 +93,7 @@ async function ArticlesGrid({ category, tag }: { category?: string; tag?: string
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {articles.map((article) => (
+      {articles.map((article: any) => (
         <ArticleCard key={article.id} article={article} />
       ))}
     </div>

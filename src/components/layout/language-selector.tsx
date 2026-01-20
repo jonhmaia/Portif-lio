@@ -35,7 +35,7 @@ export function LanguageSelector() {
   const handleLanguageChange = (lang: 'pt-BR' | 'en') => {
     startTransition(() => {
       router.replace(
-        { pathname, params: params as Record<string, string> },
+        { pathname, params: params as Record<string, string> } as any,
         { locale: lang }
       )
     })

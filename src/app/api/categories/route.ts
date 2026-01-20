@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    const categories = data?.map((category) => {
+    const categories = (data as any)?.map((category: any) => {
       const translations = (category.translations || []) as CategoryTranslation[]
       const ptTranslation = translations.find((t) => t.language === 'pt-BR')
       const enTranslation = translations.find((t) => t.language === 'en')
@@ -87,8 +87,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Add PT-BR translation
-    await supabase.from('category_translations').insert({
-      category_id: data.id,
+    await (supabase.from('category_translations') as any).insert({
+      category_id: (data as any).id,
       language: 'pt-BR',
       name: translations.pt.name,
       description: translations.pt.description || null,
@@ -96,8 +96,8 @@ export async function POST(request: NextRequest) {
 
     // Add EN translation if provided
     if (translations.en?.name) {
-      await supabase.from('category_translations').insert({
-        category_id: data.id,
+      await (supabase.from('category_translations') as any).insert({
+        category_id: (data as any).id,
         language: 'en',
         name: translations.en.name,
         description: translations.en.description || null,

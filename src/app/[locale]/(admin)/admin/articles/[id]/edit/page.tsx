@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { ArticleForm } from '@/components/admin/article-form'
+import type { Article, ArticleTranslation } from '@/lib/types/database'
 
 export const metadata: Metadata = {
   title: 'Editar Artigo | Admin',
@@ -16,7 +17,7 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
   const supabase = await createClient()
 
   // Fetch article with relations and translations
-  const { data: articleData, error } = await supabase
+  const { data: articleDataRaw, error } = await supabase
     .from('articles')
     .select(`
       *,
@@ -27,29 +28,59 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
     .eq('id', parseInt(id))
     .single()
 
-  if (error || !articleData) {
+  if (error || !articleDataRaw) {
     notFound()
   }
 
+  // Type assertion for complex query result - need all Article properties
+  const articleData = articleDataRaw as Article & {
+    tags?: Array<{ tag_id?: number }>
+    projects?: Array<{ project_id?: number }>
+    translations?: Array<ArticleTranslation & { language: string }>
+  }
+
   // Get translations
-  const translations = (articleData.translations || []) as Array<{ language: string; [key: string]: unknown }>
+  const translations = articleData.translations || []
   const ptTranslation = translations.find((t) => t.language === 'pt-BR')
   const enTranslation = translations.find((t) => t.language === 'en')
 
-  // Transform data
-  const article = {
+  // Transform data to match ArticleFormProps
+  const article: Article & {
+    tag_ids?: number[]
+    project_ids?: number[]
+    translations?: {
+      pt?: ArticleTranslation
+      en?: ArticleTranslation
+    }
+  } = {
     ...articleData,
-    tag_ids: (articleData.tags as Array<{ tag_id?: number }> | null)?.map((t) => t.tag_id).filter((id): id is number => Boolean(id)) || [],
-    project_ids: (articleData.projects as Array<{ project_id?: number }> | null)?.map((p) => p.project_id).filter((id): id is number => Boolean(id)) || [],
+    tag_ids: (articleData.tags || []).map((t) => t.tag_id).filter((id): id is number => Boolean(id)),
+    project_ids: (articleData.projects || []).map((p) => p.project_id).filter((id): id is number => Boolean(id)),
     translations: {
-      pt: ptTranslation || {
-        title: articleData.title,
-        content: articleData.content,
-        summary: articleData.summary,
-        excerpt: articleData.excerpt,
-        meta_description: articleData.meta_description,
-      },
-      en: enTranslation || undefined,
+      pt: ptTranslation ? {
+        id: ptTranslation.id,
+        article_id: ptTranslation.article_id,
+        language: ptTranslation.language,
+        title: ptTranslation.title,
+        content: ptTranslation.content,
+        summary: ptTranslation.summary,
+        excerpt: ptTranslation.excerpt,
+        meta_description: ptTranslation.meta_description,
+        created_at: ptTranslation.created_at,
+        updated_at: ptTranslation.updated_at,
+      } : undefined,
+      en: enTranslation ? {
+        id: enTranslation.id,
+        article_id: enTranslation.article_id,
+        language: enTranslation.language,
+        title: enTranslation.title,
+        content: enTranslation.content,
+        summary: enTranslation.summary,
+        excerpt: enTranslation.excerpt,
+        meta_description: enTranslation.meta_description,
+        created_at: enTranslation.created_at,
+        updated_at: enTranslation.updated_at,
+      } : undefined,
     },
   }
 

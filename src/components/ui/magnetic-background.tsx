@@ -65,6 +65,8 @@ export function MagneticBackground({ className }: MagneticBackgroundProps) {
       }
 
       update() {
+        if (!canvas) return
+        
         // Physics Calculation
         
         // 1. Mouse Interaction (Magnet)
@@ -119,6 +121,8 @@ export function MagneticBackground({ className }: MagneticBackgroundProps) {
     }
 
     const initParticles = () => {
+      if (!canvas) return
+      
       particles = []
       // Density control: fewer particles on small screens
       const particleCount = Math.floor((canvas.width * canvas.height) / 12000)
@@ -158,6 +162,8 @@ export function MagneticBackground({ className }: MagneticBackgroundProps) {
     }
 
     const animate = () => {
+      if (!canvas || !ctx) return
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
       particles.forEach(particle => {

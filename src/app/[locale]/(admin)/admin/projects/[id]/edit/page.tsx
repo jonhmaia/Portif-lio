@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { ProjectForm } from '@/components/admin/project-form'
+import type { Project, ProjectTranslation, ProjectImage } from '@/lib/types/database'
 
 export const metadata: Metadata = {
   title: 'Editar Projeto | Admin',
@@ -16,7 +17,7 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
   const supabase = await createClient()
 
   // Fetch project with relations and translations
-  const { data: projectData, error } = await supabase
+  const { data: projectDataRaw, error } = await supabase
     .from('projects')
     .select(`
       *,
@@ -28,30 +29,62 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
     .eq('id', parseInt(id))
     .single()
 
-  if (error || !projectData) {
+  if (error || !projectDataRaw) {
     notFound()
   }
 
+  // Type assertion for complex query result - need all Project properties
+  const projectData = projectDataRaw as Project & {
+    technologies?: Array<{ technology_id?: number }>
+    tags?: Array<{ tag_id?: number }>
+    images?: ProjectImage[]
+    translations?: Array<ProjectTranslation & { language: string }>
+  }
+
   // Get translations
-  const translations = (projectData.translations || []) as Array<{ language: string; [key: string]: unknown }>
+  const translations = projectData.translations || []
   const ptTranslation = translations.find((t) => t.language === 'pt-BR')
   const enTranslation = translations.find((t) => t.language === 'en')
 
-  // Transform data
-  const project = {
+  // Transform data to match ProjectFormProps
+  const project: Project & {
+    technology_ids?: number[]
+    tag_ids?: number[]
+    images?: ProjectImage[]
+    translations?: {
+      pt?: ProjectTranslation
+      en?: ProjectTranslation
+    }
+  } = {
     ...projectData,
-    technology_ids: (projectData.technologies as Array<{ technology_id?: number }> | null)?.map((t) => t.technology_id).filter((id): id is number => Boolean(id)) || [],
-    tag_ids: (projectData.tags as Array<{ tag_id?: number }> | null)?.map((t) => t.tag_id).filter((id): id is number => Boolean(id)) || [],
+    technology_ids: (projectData.technologies || []).map((t) => t.technology_id).filter((id): id is number => Boolean(id)),
+    tag_ids: (projectData.tags || []).map((t) => t.tag_id).filter((id): id is number => Boolean(id)),
     images: projectData.images || [],
     translations: {
-      pt: ptTranslation || {
-        title: projectData.title,
-        subtitle: projectData.subtitle,
-        short_description: projectData.short_description,
-        full_description: projectData.full_description,
-        meta_description: projectData.meta_description,
-      },
-      en: enTranslation || undefined,
+      pt: ptTranslation ? {
+        id: ptTranslation.id,
+        project_id: ptTranslation.project_id,
+        language: ptTranslation.language,
+        title: ptTranslation.title,
+        subtitle: ptTranslation.subtitle,
+        short_description: ptTranslation.short_description,
+        full_description: ptTranslation.full_description,
+        meta_description: ptTranslation.meta_description,
+        created_at: ptTranslation.created_at,
+        updated_at: ptTranslation.updated_at,
+      } : undefined,
+      en: enTranslation ? {
+        id: enTranslation.id,
+        project_id: enTranslation.project_id,
+        language: enTranslation.language,
+        title: enTranslation.title,
+        subtitle: enTranslation.subtitle,
+        short_description: enTranslation.short_description,
+        full_description: enTranslation.full_description,
+        meta_description: enTranslation.meta_description,
+        created_at: enTranslation.created_at,
+        updated_at: enTranslation.updated_at,
+      } : undefined,
     },
   }
 

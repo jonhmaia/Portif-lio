@@ -39,19 +39,21 @@ export async function GET(
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    const translations = (data.translations || []) as ArticleTranslation[]
+    const typedData = data as any
+
+    const translations = (typedData.translations || []) as ArticleTranslation[]
     const ptTranslation = translations.find((t) => t.language === 'pt-BR')
     const enTranslation = translations.find((t) => t.language === 'en')
     const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
 
     // Get IDs for the form
-    const tag_ids = data.tags?.map((at) => at.tag?.id).filter((id): id is number => Boolean(id)) || []
-    const project_ids = data.projects?.map((ap) => ap.project?.id).filter((id): id is number => Boolean(id)) || []
+    const tag_ids = (typedData.tags as any)?.map((at: any) => at.tag?.id).filter((id: any): id is number => Boolean(id)) || []
+    const project_ids = (typedData.projects as any)?.map((ap: any) => ap.project?.id).filter((id: any): id is number => Boolean(id)) || []
 
     const baseArticle = {
-      ...data,
-      tags: data.tags?.map((at) => at.tag).filter((t): t is Tag => t !== null && t !== undefined) || [],
-      projects: data.projects?.map((ap) => ap.project).filter((p): p is Pick<Project, 'id' | 'title' | 'slug' | 'cover_image_url'> => p !== null && p !== undefined) || [],
+      ...typedData,
+      tags: (typedData.tags as any)?.map((at: any) => at.tag).filter((t: any): t is Tag => t !== null && t !== undefined) || [],
+      projects: (typedData.projects as any)?.map((ap: any) => ap.project).filter((p: any): p is Pick<Project, 'id' | 'title' | 'slug' | 'cover_image_url'> => p !== null && p !== undefined) || [],
       tag_ids,
       project_ids,
     }
@@ -70,11 +72,11 @@ export async function GET(
       return NextResponse.json({
         data: {
           ...baseArticle,
-          title: currentTranslation?.title || data.title,
-          content: currentTranslation?.content || data.content,
-          summary: currentTranslation?.summary || data.summary,
-          excerpt: currentTranslation?.excerpt || data.excerpt,
-          meta_description: currentTranslation?.meta_description || data.meta_description,
+          title: currentTranslation?.title || typedData.title,
+          content: currentTranslation?.content || typedData.content,
+          summary: currentTranslation?.summary || typedData.summary,
+          excerpt: currentTranslation?.excerpt || typedData.excerpt,
+          meta_description: currentTranslation?.meta_description || typedData.meta_description,
         },
       })
     }
@@ -111,8 +113,8 @@ export async function PUT(
     const reading_time_minutes = calculateReadingTime(translations.pt.content)
 
     // Update the article with PT translation
-    const { data: article, error: articleError } = await supabase
-      .from('articles')
+    const { data: article, error: articleError } = await ((supabase
+      .from('articles') as any)
       .update({
         ...articleData,
         title: translations.pt.title,
@@ -124,14 +126,14 @@ export async function PUT(
       })
       .eq('id', id)
       .select()
-      .single()
+      .single())
 
     if (articleError) {
       return NextResponse.json({ error: articleError.message }, { status: 500 })
     }
 
     // Update PT-BR translation (upsert)
-    await supabase.from('article_translations').upsert({
+    await (supabase.from('article_translations') as any).upsert({
       article_id: parseInt(id),
       language: 'pt-BR',
       title: translations.pt.title,
@@ -143,7 +145,7 @@ export async function PUT(
 
     // Handle EN translation
     if (translations.en?.title && translations.en?.content) {
-      await supabase.from('article_translations').upsert({
+      await (supabase.from('article_translations') as any).upsert({
         article_id: parseInt(id),
         language: 'en',
         title: translations.en.title,
@@ -170,7 +172,7 @@ export async function PUT(
           article_id: parseInt(id),
           tag_id,
         }))
-        await supabase.from('article_tags').insert(articleTags)
+        await (supabase.from('article_tags') as any).insert(articleTags)
       }
     }
 

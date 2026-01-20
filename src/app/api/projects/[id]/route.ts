@@ -37,20 +37,22 @@ export async function GET(
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
+    const typedData = data as any
+
     // Get translations
-    const translations = (data.translations || []) as ProjectTranslation[]
+    const translations = (typedData.translations || []) as ProjectTranslation[]
     const ptTranslation = translations.find((t) => t.language === 'pt-BR')
     const enTranslation = translations.find((t) => t.language === 'en')
     const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
 
     // Get technology and tag IDs for the form
-    const technology_ids = data.technologies?.map((pt) => pt.technology?.id).filter((id): id is number => Boolean(id)) || []
-    const tag_ids = data.tags?.map((pt) => pt.tag?.id).filter((id): id is number => Boolean(id)) || []
+    const technology_ids = (typedData.technologies as any)?.map((pt: any) => pt.technology?.id).filter((id: any): id is number => Boolean(id)) || []
+    const tag_ids = (typedData.tags as any)?.map((pt: any) => pt.tag?.id).filter((id: any): id is number => Boolean(id)) || []
 
     const baseProject = {
-      ...data,
-      technologies: data.technologies?.map((pt) => pt.technology).filter((t): t is Technology => t !== null && t !== undefined) || [],
-      tags: data.tags?.map((pt) => pt.tag).filter((t): t is Tag => t !== null && t !== undefined) || [],
+      ...typedData,
+      technologies: (typedData.technologies as any)?.map((pt: any) => pt.technology).filter((t: any): t is Technology => t !== null && t !== undefined) || [],
+      tags: (typedData.tags as any)?.map((pt: any) => pt.tag).filter((t: any): t is Tag => t !== null && t !== undefined) || [],
       technology_ids,
       tag_ids,
     }
@@ -71,11 +73,11 @@ export async function GET(
       return NextResponse.json({
         data: {
           ...baseProject,
-          title: currentTranslation?.title || data.title,
-          subtitle: currentTranslation?.subtitle || data.subtitle,
-          short_description: currentTranslation?.short_description || data.short_description,
-          full_description: currentTranslation?.full_description || data.full_description,
-          meta_description: currentTranslation?.meta_description || data.meta_description,
+          title: currentTranslation?.title || typedData.title,
+          subtitle: currentTranslation?.subtitle || typedData.subtitle,
+          short_description: currentTranslation?.short_description || typedData.short_description,
+          full_description: currentTranslation?.full_description || typedData.full_description,
+          meta_description: currentTranslation?.meta_description || typedData.meta_description,
         },
       })
     }
@@ -109,8 +111,8 @@ export async function PUT(
     }
 
     // Update the project (update legacy fields with PT translation)
-    const { data: project, error: projectError } = await supabase
-      .from('projects')
+    const { data: project, error: projectError } = await ((supabase
+      .from('projects') as any)
       .update({
         ...projectData,
         title: translations.pt.title,
@@ -121,14 +123,14 @@ export async function PUT(
       })
       .eq('id', id)
       .select()
-      .single()
+      .single())
 
     if (projectError) {
       return NextResponse.json({ error: projectError.message }, { status: 500 })
     }
 
     // Update PT-BR translation (upsert)
-    await supabase.from('project_translations').upsert({
+    await (supabase.from('project_translations') as any).upsert({
       project_id: parseInt(id),
       language: 'pt-BR',
       title: translations.pt.title,
@@ -140,7 +142,7 @@ export async function PUT(
 
     // Handle EN translation
     if (translations.en?.title) {
-      await supabase.from('project_translations').upsert({
+      await (supabase.from('project_translations') as any).upsert({
         project_id: parseInt(id),
         language: 'en',
         title: translations.en.title,
@@ -167,7 +169,7 @@ export async function PUT(
           project_id: parseInt(id),
           technology_id: tech_id,
         }))
-        await supabase.from('project_technologies').insert(projectTechnologies)
+        await (supabase.from('project_technologies') as any).insert(projectTechnologies)
       }
     }
 
@@ -180,7 +182,7 @@ export async function PUT(
           project_id: parseInt(id),
           tag_id,
         }))
-        await supabase.from('project_tags').insert(projectTags)
+        await (supabase.from('project_tags') as any).insert(projectTags)
       }
     }
 

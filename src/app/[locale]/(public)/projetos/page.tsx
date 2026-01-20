@@ -37,7 +37,7 @@ export default async function ProjectsPage() {
 
   // Transform data to match the expected format
   const projects =
-    projectsData?.map((project) => {
+    (projectsData as any)?.map((project: any) => {
       const translations = (project.translations || []) as Array<{ language: string; title?: string; subtitle?: string | null; short_description?: string | null; full_description?: string | null; meta_description?: string | null }>
       const ptTranslation = translations.find((tr) => tr.language === 'pt-BR')
       const enTranslation = translations.find((tr) => tr.language === 'en')
@@ -46,14 +46,14 @@ export default async function ProjectsPage() {
       return {
         ...project,
         technologies:
-          project.technologies?.map((pt: { technology: unknown } | null) => pt?.technology).filter(Boolean) || [],
-        tags: project.tags?.map((pt: { tag: unknown } | null) => pt?.tag).filter(Boolean) || [],
-        title: currentTranslation?.title || project.title,
-        subtitle: currentTranslation?.subtitle || project.subtitle,
+          (project.technologies as any)?.map((pt: { technology: unknown } | null) => pt?.technology).filter(Boolean) || [],
+        tags: (project.tags as any)?.map((pt: { tag: unknown } | null) => pt?.tag).filter(Boolean) || [],
+        title: currentTranslation?.title || (project as any).title,
+        subtitle: currentTranslation?.subtitle || (project as any).subtitle,
         short_description:
-          currentTranslation?.short_description || project.short_description,
-        full_description: currentTranslation?.full_description || project.full_description,
-        meta_description: currentTranslation?.meta_description || project.meta_description,
+          currentTranslation?.short_description || (project as any).short_description,
+        full_description: currentTranslation?.full_description || (project as any).full_description,
+        meta_description: currentTranslation?.meta_description || (project as any).meta_description,
         gradient: 'from-violet-600 to-indigo-600',
       }
     }) || []
@@ -94,7 +94,7 @@ export default async function ProjectsPage() {
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-              <span>{projects.filter(p => p.is_featured).length} Destaques</span>
+              <span>{projects.filter((p: any) => p.is_featured).length} Destaques</span>
             </div>
           </div>
         </div>
@@ -114,9 +114,9 @@ export default async function ProjectsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
-            {projects.map((project) => (
+            {projects.map((project: any) => (
               <Link 
-                href={`/projetos/${project.slug}`}
+                href={`/projetos/${project.slug}` as any}
                 key={project.id}
                 className={`group relative flex flex-col bg-card/60 backdrop-blur-md border border-border/50 rounded-2xl md:rounded-3xl overflow-hidden hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1 ${project.is_featured ? 'md:col-span-2 lg:col-span-2 ring-2 ring-primary/20' : ''}`}
               >
