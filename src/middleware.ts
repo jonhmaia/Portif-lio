@@ -27,12 +27,33 @@ function withLocale(pathname: string, locale: string) {
   return `/${locale}${pathname === '/' ? '' : pathname}`
 }
 
+function getSupabaseEnv() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!url || !key) {
+    console.error(
+      'Missing Supabase environment variables. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your environment variables.'
+    )
+    return null
+  }
+
+  return { url, key }
+}
+
 export async function middleware(request: NextRequest) {
   const response = intlMiddleware(request)
 
+  const env = getSupabaseEnv()
+  if (!env) {
+    // Return response without auth check if env vars are missing
+    // This prevents the app from crashing but auth will not work
+    return response
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    env.url,
+    env.key,
     {
       cookies: {
         getAll() {

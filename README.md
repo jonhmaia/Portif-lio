@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Next.js
 
-## Getting Started
+Projeto de portfólio desenvolvido com Next.js, TypeScript, Supabase e Next-intl.
 
-First, run the development server:
+## Configuração de Variáveis de Ambiente
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Este projeto requer as seguintes variáveis de ambiente para funcionar corretamente:
+
+### Variáveis Obrigatórias
+
+1. **NEXT_PUBLIC_SUPABASE_URL** - URL do seu projeto Supabase
+   - Encontre esta URL em: https://supabase.com/dashboard/project/_/settings/api
+   - Exemplo: `https://xxxxxxxxxxxxx.supabase.co`
+
+2. **NEXT_PUBLIC_SUPABASE_ANON_KEY** - Chave anônima (pública) do Supabase
+   - Encontre esta chave em: https://supabase.com/dashboard/project/_/settings/api
+   - Esta é a chave `anon` ou `public`
+
+### Variável Opcional (para operações admin)
+
+3. **SUPABASE_SERVICE_ROLE_KEY** - Chave de serviço do Supabase (usada apenas server-side)
+   - Encontre esta chave em: https://supabase.com/dashboard/project/_/settings/api
+   - ⚠️ **IMPORTANTE**: Nunca exponha esta chave no cliente. Ela só deve ser usada em rotas de API server-side.
+
+## Configuração no Vercel
+
+Para configurar as variáveis de ambiente no Vercel:
+
+1. Acesse seu projeto no Vercel Dashboard
+2. Vá em **Settings** → **Environment Variables**
+3. Adicione as seguintes variáveis:
+   - `NEXT_PUBLIC_SUPABASE_URL` (valor: sua URL do Supabase)
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` (valor: sua chave anônima)
+   - `SUPABASE_SERVICE_ROLE_KEY` (valor: sua chave de serviço - opcional mas recomendado para funcionalidades admin)
+
+4. Certifique-se de que as variáveis estão configuradas para os ambientes corretos:
+   - Production
+   - Preview (opcional)
+   - Development (opcional)
+
+5. Após adicionar as variáveis, você precisará fazer um novo deploy para que as mudanças tenham efeito.
+
+## Como Obter as Credenciais do Supabase
+
+1. Acesse https://supabase.com/dashboard
+2. Selecione seu projeto (ou crie um novo)
+3. Vá em **Settings** → **API**
+4. Na seção **Project API keys**, você encontrará:
+   - **Project URL** → Use como `NEXT_PUBLIC_SUPABASE_URL`
+   - **anon public** → Use como `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - **service_role** → Use como `SUPABASE_SERVICE_ROLE_KEY` (manter em segredo!)
+
+## Configuração Local
+
+Para desenvolvimento local, crie um arquivo `.env.local` na raiz do projeto:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxxxxxxxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+⚠️ **Não commite o arquivo `.env.local`** - ele já está no `.gitignore`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Troubleshooting
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Se você estiver vendo erros sobre variáveis de ambiente faltando:
 
-## Learn More
+1. Verifique se as variáveis estão configuradas corretamente no Vercel
+2. Certifique-se de que fez um novo deploy após adicionar as variáveis
+3. Verifique se os nomes das variáveis estão corretos (case-sensitive)
+4. Para variáveis `NEXT_PUBLIC_*`, certifique-se de que elas estão acessíveis no cliente (isso é automático no Next.js)
 
-To learn more about Next.js, take a look at the following resources:
+## Desenvolvimento
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Instalar dependências
+npm install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Rodar em desenvolvimento
+npm run dev
 
-## Deploy on Vercel
+# Build para produção
+npm run build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Iniciar produção
+npm start
+```
