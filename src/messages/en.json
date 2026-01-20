@@ -1,0 +1,266 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "blog": "Blog",
+    "resume": "Resume",
+    "contact": "Contact"
+  },
+  "blogArticle": {
+    "back": "Back to blog"
+  },
+  "actions": {
+    "toggleTheme": "Toggle theme"
+  },
+  "a11y": {
+    "navigationMenu": "Navigation menu"
+  },
+  "footer": {
+    "description": "Full Stack developer passionate about building modern, scalable web solutions. Specialized in React, Node.js and Python.",
+    "sections": {
+      "navigation": "Navigation",
+      "resources": "Resources"
+    },
+    "links": {
+      "home": "Home",
+      "projects": "Projects",
+      "blog": "Blog",
+      "resume": "Resume",
+      "contact": "Contact",
+      "sitemap": "Sitemap",
+      "admin": "Admin"
+    },
+    "copyright": "© {year} João Marcos. All rights reserved.",
+    "madeWith": "Made with",
+    "using": "using Next.js and Supabase"
+  },
+  "home": {
+    "hero": {
+      "title": "HI, I'M JOÃO MARCOS",
+      "location": "Goiânia, GO, Brazil",
+      "cta": "View Projects"
+    },
+    "bio": {
+      "p1": "Professional with strong experience in <emphasis>Software Engineering and Digital Products</emphasis>, combining the robustness of Full Stack development (Python/Node/C) with the agility of Low-Code strategies (Bubble/n8n). Specialized in turning technology into competitive advantage, acting strategically at the intersection of Sales Engineering, Product Development and Artificial Intelligence.",
+      "p2": "Co-author of scientific research in <emphasis>Generative AI and NLP (WebMedia 2025)</emphasis>, with proven capability in Technical Leadership (Head of Tech) and execution of high-complexity projects. Track record in architecting platforms for regulated niches (Fintech and LegalTech), aligning business vision with technical execution to deliver scalable, ROI-driven outcomes.",
+      "p3": "Recognized for a strong ability to implement <emphasis>Revenue Engineering</emphasis>, orchestrating automation and integration ecosystems (n8n) that optimize sales funnels and reduced customer deployment time by 99% (from hours to seconds). Experienced in LLM fine-tuning, Data Governance and Observability, translating complex demands into resilient systems.",
+      "p4": "Hands-on experience optimizing operational processes through <emphasis>Hyperautomation and Autonomous Agents</emphasis>, implementing security best practices and developing performance metrics to monitor operational efficiency."
+    },
+    "techSkills": {
+      "title": "Technical Skills",
+      "subtitle": "Technologies and tools I master in development"
+    }
+  },
+  "admin": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "projects": "Projects",
+      "articles": "Articles",
+      "technologies": "Technologies",
+      "tags": "Tags",
+      "categories": "Categories",
+      "controlPanel": "Control Panel",
+      "backToSite": "Back to site",
+      "navigationMenu": "Navigation menu"
+    },
+    "header": {
+      "title": "Admin Panel",
+      "toggleTheme": "Toggle theme",
+      "notifications": "Notifications",
+      "signOut": "Sign out",
+      "signOutSuccess": "See you!",
+      "signOutError": "Error signing out"
+    }
+  },
+  "resume": {
+    "title": "Resume | João Marcos",
+    "description": "Professional resume of João Marcos - N8N Expert, Software Engineer, RPA, Python & AI Engineer.",
+    "role": "N8N Expert | Software Engineer | RPA | Python | AI Engineer",
+    "downloadPdf": "Download PDF",
+    "professionalSummary": {
+      "title": "Professional Summary",
+      "p1": "Professional with strong experience in <emphasis>Software Engineering and Digital Products</emphasis>, combining the robustness of Full Stack development (Python/Node/C) with the agility of Low-Code strategies (Bubble/n8n). Specialized in turning technology into competitive advantage, acting strategically at the intersection of Sales Engineering, Product Development and Artificial Intelligence.",
+      "p2": "Co-author of scientific research in <emphasis>Generative AI and NLP (WebMedia 2025)</emphasis>, with proven capability in Technical Leadership (Head of Tech) and execution of high-complexity projects. Track record in architecting platforms for regulated niches (Fintech and LegalTech), aligning business vision with technical execution to deliver scalable, ROI-driven outcomes.",
+      "p3": "Recognized for a strong ability to implement <emphasis>Revenue Engineering</emphasis>, orchestrating automation and integration ecosystems (n8n) that optimize sales funnels and reduced customer deployment time by 99% (from hours to seconds). Expertise in LLM Fine-Tuning, Data Governance and Observability, translating complex demands into resilient systems."
+    },
+    "experience": {
+      "title": "Professional Experience",
+      "watrix": {
+        "role": "Senior RPA Developer",
+        "period": "06/2025 - Current",
+        "company": "Watrix Tecnologia",
+        "items": {
+          "1": "Specialist in orchestrating advanced n8n automations for the Real Estate Market.",
+          "2": "Optimization of high-performance sales funnels and development of complex end-to-end integrations.",
+          "3": "Responsible for Governance, Maintenance and Observability of critical automation flows and AI Agents.",
+          "4": "Efficiency Engineering: Ideated and developed an internal deploy tool that reduced configuration time from 2 hours to 56 seconds."
+        }
+      },
+      "flexOn": {
+        "role": "Head of Tech",
+        "period": "02/2024 - 06/2025",
+        "company": "Flex ON",
+        "items": {
+          "1": "Product Engineering & Hybrid Architecture: Leadership in building digital products combining No-Code (Bubble.io) with Full Stack.",
+          "2": "Leadership in AI, Automation & UX: Strategic implementation of AI Agents and RPA focusing on usability.",
+          "3": "Technical Product Management (Technical PM): Strategic link between Business and Engineering, translating corporate demands into technical requirements."
+        }
+      },
+      "ceia": {
+        "role": "Researcher and Developer",
+        "period": "02/2025 - 09/2025",
+        "company": "Center of Excellence in Artificial Intelligence - CEIA",
+        "items": {
+          "1": "Interface Development & UX for AI: Construction of reactive front-ends with React and JavaScript.",
+          "2": "LLM Fine-Tuning & Optimization: Training and fine-tuning of language models for specific domains.",
+          "3": "Scientific Research & Innovation (R&D): Publication of the paper &quot;A conversational agent for emotional support to people with anxious states&quot; at WebMedia 2025."
+        }
+      }
+    },
+    "featuredProjects": {
+      "title": "Featured Projects",
+      "maestro": {
+        "title": "Maestro AI (Personal Assistant via WhatsApp)",
+        "subtitle": "Complete Life OS integrated with WhatsApp using LLMs and n8n.",
+        "description": "System that acts as a financial and productivity assistant, capable of interpreting audio and text to register expenses, manage schedule and create tasks automatically."
+      },
+      "camapum": {
+        "title": "Camapum Console (LegalTech & PropTech)",
+        "subtitle": "SaaS platform for legal and administrative management of condominiums.",
+        "description": "Centralizes the law firm's operation, allowing real-time monitoring of processes. Includes administrative panel that automates the lifecycle of complaints and occurrences, integrated with artificial intelligence for process automation."
+      },
+      "cashmed": {
+        "title": "CashMed (Health Fintech)",
+        "subtitle": "Financial platform specialized in medical fee management.",
+        "description": "System that manages over R$ 10 million in fees. Implementation of calculation engine for receivables anticipation offers, ensuring mathematical precision and transactional security."
+      }
+    },
+    "education": {
+      "title": "Education & Research",
+      "ufg": {
+        "title": "Computer Science",
+        "institution": "Federal University of Goiás (UFG)",
+        "period": "2022 - Current"
+      },
+      "research": {
+        "title": "Researcher in Generative AI and NLP",
+        "event": "WebMedia 2025",
+        "badge": "Publication",
+        "description": "Development of a conversational agent for emotional support for mild to moderate anxiety, using modular and multi-agent architecture. The project introduces a dimensional modeling of anxiety in three axes (fear, tension and worry) to promote responsive interactions based on active listening. The system applies cognitive restructuring and anxiety management techniques, preserving rigorous ethical and technical criteria without diagnostic purpose."
+      }
+    },
+    "skills": {
+      "title": "Technical Skills",
+      "fullstack": {
+        "title": "Full Stack Development"
+      },
+      "ai": {
+        "title": "AI & Data Engineering"
+      },
+      "automation": {
+        "title": "Automation & Cloud"
+      },
+      "strategy": {
+        "title": "Strategy & Leadership"
+      }
+    },
+    "languages": {
+      "title": "Languages",
+      "pt": {
+        "name": "Portuguese",
+        "level": "Native"
+      },
+      "en": {
+        "name": "English",
+        "level": "Intermediate"
+      }
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Have a project in mind or just want to chat? I'd love to hear from you!",
+    "toast": {
+      "success": "Message sent successfully! I'll get back to you soon.",
+      "error": "Error sending message. Please try again."
+    },
+    "info": {
+      "title": "Contact Information",
+      "email": "Email",
+      "location": "Location",
+      "locationValue": "Brazil"
+    },
+    "responseTime": {
+      "title": "Response Time",
+      "description": "I usually reply within 24 business hours."
+    },
+    "availability": {
+      "title": "Available for new projects",
+      "description": "Currently accepting freelance work and mid/long-term projects."
+    },
+    "form": {
+      "title": "Send a Message",
+      "description": "Fill out the form below and I'll reply as soon as possible.",
+      "nameLabel": "Name *",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email *",
+      "emailPlaceholder": "you@email.com",
+      "whatsappLabel": "WhatsApp *",
+      "whatsappPlaceholder": "(00) 00000-0000",
+      "sending": "Sending...",
+      "submit": "Send Message"
+    }
+  },
+  "projects": {
+    "premium": "PREMIUM COLLECTION",
+    "title": "PROJECTS",
+    "subtitle": "A curated set of high-engineering solutions, where <emphasis>technical precision</emphasis> meets <emphasis>digital art</emphasis>.",
+    "empty": "No projects found at the moment.",
+    "featured": "Featured",
+    "cta": {
+      "title": "Have a visionary project in mind?",
+      "button": "START COLLABORATION"
+    }
+  },
+  "auth": {
+    "loginPage": {
+      "title": "Welcome back",
+      "subtitle": "Sign in with your credentials to access the admin panel",
+      "backToSite": "← Back to site"
+    },
+    "loginForm": {
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "loading": "Signing in...",
+      "submit": "Sign in",
+      "success": "Signed in successfully!",
+      "errors": {
+        "invalidCredentials": "Incorrect email or password",
+        "generic": "Error signing in. Please try again."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Articles about web development, programming, technology and practical tips for developers.",
+    "empty": {
+      "title": "No articles found",
+      "filtered": "Try removing the filters to see more articles.",
+      "default": "Articles will be published here soon."
+    }
+  },
+  "validation": {
+    "login": {
+      "emailInvalid": "Invalid email",
+      "passwordMin": "Password must be at least 6 characters"
+    },
+    "contact": {
+      "nameMin": "Name must be at least 2 characters",
+      "emailInvalid": "Invalid email",
+      "whatsappMin": "WhatsApp must be at least 10 characters"
+    }
+  }
+}

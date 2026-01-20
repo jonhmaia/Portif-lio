@@ -1,0 +1,266 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projetos",
+    "blog": "Blog",
+    "resume": "Currículo",
+    "contact": "Contato"
+  },
+  "blogArticle": {
+    "back": "Voltar ao blog"
+  },
+  "actions": {
+    "toggleTheme": "Alternar tema"
+  },
+  "a11y": {
+    "navigationMenu": "Menu de navegação"
+  },
+  "footer": {
+    "description": "Desenvolvedor Full Stack apaixonado por criar soluções web modernas e escaláveis. Especializado em React, Node.js e Python.",
+    "sections": {
+      "navigation": "Navegação",
+      "resources": "Recursos"
+    },
+    "links": {
+      "home": "Home",
+      "projects": "Projetos",
+      "blog": "Blog",
+      "resume": "Currículo",
+      "contact": "Contato",
+      "sitemap": "Sitemap",
+      "admin": "Admin"
+    },
+    "copyright": "© {year} João Marcos. Todos os direitos reservados.",
+    "madeWith": "Feito com",
+    "using": "usando Next.js e Supabase"
+  },
+  "home": {
+    "hero": {
+      "title": "OLÁ, EU SOU JOÃO MARCOS",
+      "location": "Goiânia, GO, Brasil",
+      "cta": "Ver Projetos"
+    },
+    "bio": {
+      "p1": "Profissional com sólida atuação em <emphasis>Engenharia de Software e Produtos Digitais</emphasis>, combinando a robustez do desenvolvimento Full Stack (Python/Node/C) com a agilidade de estratégias Low-Code (Bubble/n8n). Especialista em transformar tecnologia em vantagem competitiva, atuando estrategicamente na interseção entre Engenharia de Vendas, Desenvolvimento de Produto e Inteligência Artificial.",
+      "p2": "Coautor de pesquisa científica em <emphasis>IA Generativa e NLP (WebMedia 2025)</emphasis>, com competência comprovada em Liderança Técnica (Head of Tech) e execução de projetos de alta complexidade. Histórico de sucesso na arquitetura de plataformas para nichos regulados (Fintech e LegalTech), promovendo alinhamento entre visão de negócio e execução técnica para garantir entregas escaláveis e orientadas a ROI.",
+      "p3": "Reconhecido pela forte capacidade de implementar <emphasis>Engenharia de Receita</emphasis>, orquestrando ecossistemas de automação e integração (n8n) que otimizam funis de vendas e reduziram o tempo de deploy de clientes em 99% (de horas para segundos). Expertise em Fine-Tuning de LLMs, Governança de Dados e Observabilidade, traduzindo demandas complexas em sistemas resilientes.",
+      "p4": "Possui experiência prática e habilidade para otimizar processos operacionais através de <emphasis>Hiperautomação e Agentes Autônomos</emphasis>, implementando melhores práticas de segurança e desenvolvendo métricas de desempenho para monitorar a eficiência operacional."
+    },
+    "techSkills": {
+      "title": "Habilidades Técnicas",
+      "subtitle": "Tecnologias e ferramentas que domino no desenvolvimento"
+    }
+  },
+  "admin": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "projects": "Projetos",
+      "articles": "Artigos",
+      "technologies": "Tecnologias",
+      "tags": "Tags",
+      "categories": "Categorias",
+      "controlPanel": "Painel de Controle",
+      "backToSite": "Voltar ao site",
+      "navigationMenu": "Menu de navegação"
+    },
+    "header": {
+      "title": "Painel Administrativo",
+      "toggleTheme": "Alternar tema",
+      "notifications": "Notificações",
+      "signOut": "Sair",
+      "signOutSuccess": "Até logo!",
+      "signOutError": "Erro ao sair"
+    }
+  },
+  "resume": {
+    "title": "Currículo | João Marcos",
+    "description": "Currículo profissional de João Marcos - N8N Expert, Software Engineer, RPA, Python & AI Engineer.",
+    "role": "N8N Expert | Software Engineer | RPA | Python | AI Engineer",
+    "downloadPdf": "Download PDF",
+    "professionalSummary": {
+      "title": "Resumo Profissional",
+      "p1": "Profissional com sólida atuação em <emphasis>Engenharia de Software e Produtos Digitais</emphasis>, combinando a robustez do desenvolvimento Full Stack (Python/Node/C) com a agilidade de estratégias Low-Code (Bubble/n8n). Especialista em transformar tecnologia em vantagem competitiva, atuando estrategicamente na interseção entre Engenharia de Vendas, Desenvolvimento de Produto e Inteligência Artificial.",
+      "p2": "Coautor de pesquisa científica em <emphasis>IA Generativa e NLP (WebMedia 2025)</emphasis>, com competência comprovada em Liderança Técnica (Head of Tech) e execução de projetos de alta complexidade. Histórico de sucesso na arquitetura de plataformas para nichos regulados (Fintech e LegalTech), promovendo alinhamento entre visão de negócio e execução técnica para garantir entregas escaláveis e orientadas a ROI.",
+      "p3": "Reconhecido pela forte capacidade de implementar <emphasis>Engenharia de Receita</emphasis>, orquestrando ecossistemas de automação e integração (n8n) que otimizam funis de vendas e reduziram o tempo de deploy de clientes em 99% (de horas para segundos). Expertise em Fine-Tuning de LLMs, Governança de Dados e Observabilidade, traduzindo demandas complexas em sistemas resilientes."
+    },
+    "experience": {
+      "title": "Experiência Profissional",
+      "watrix": {
+        "role": "Desenvolvedor RPA Sênior",
+        "period": "06/2025 - Atual",
+        "company": "Watrix Tecnologia",
+        "items": {
+          "1": "Especialista na orquestração de automações avançadas no n8n voltadas para o Mercado Imobiliário.",
+          "2": "Otimização de funis de vendas de alta performance e desenvolvimento de integrações complexas end-to-end.",
+          "3": "Responsável pela Governança, Manutenção e Observabilidade de fluxos de automação críticos e Agentes de IA.",
+          "4": "Engenharia de Eficiência: Idealizei e desenvolvi uma ferramenta interna de deploy que reduziu o tempo de configuração de 2 horas para 56 segundos."
+        }
+      },
+      "flexOn": {
+        "role": "Head de Tecnologia",
+        "period": "02/2024 - 06/2025",
+        "company": "Flex ON",
+        "items": {
+          "1": "Engenharia de Produto & Arquitetura Híbrida: Liderança na construção de produtos digitais combinando No-Code (Bubble.io) com Full Stack.",
+          "2": "Liderança em IA, Automação & UX: Implementação estratégica de Agentes de IA e RPA com foco na usabilidade.",
+          "3": "Gestão Técnica de Produto (Technical PM): Elo estratégico entre Negócios e Engenharia, traduzindo demandas corporativas em requisitos técnicos."
+        }
+      },
+      "ceia": {
+        "role": "Pesquisador e Desenvolvedor",
+        "period": "02/2025 - 09/2025",
+        "company": "Centro de Excelência em Inteligência Artificial - CEIA",
+        "items": {
+          "1": "Desenvolvimento de Interfaces & UX para IA: Construção de front-ends reativos com React e JavaScript.",
+          "2": "Fine-Tuning & Otimização de LLMs: Treinamento e ajuste fino de modelos de linguagem para domínios específicos.",
+          "3": "Pesquisa Científica & Inovação (P&D): Publicação do artigo &quot;Um agente conversacional para suporte emocional a pessoas com estados ansiosos&quot; no WebMedia 2025."
+        }
+      }
+    },
+    "featuredProjects": {
+      "title": "Projetos em Destaque",
+      "maestro": {
+        "title": "Maestro AI (Assistente Pessoal via WhatsApp)",
+        "subtitle": "Life OS completo integrado ao WhatsApp utilizando LLMs e n8n.",
+        "description": "Sistema que atua como assistente financeiro e de produtividade, capaz de interpretar áudios e textos para registrar despesas, gerenciar agenda e criar tarefas automaticamente."
+      },
+      "camapum": {
+        "title": "Camapum Console (LegalTech & PropTech)",
+        "subtitle": "Plataforma SaaS para gestão jurídica e administrativa de condomínios.",
+        "description": "Centraliza a operação do escritório de advocacia, permitindo acompanhamento em tempo real de processos. Inclui painel administrativo que automatiza o ciclo de vida de denúncias e ocorrências, integrado a inteligência artificial para automação do processo."
+      },
+      "cashmed": {
+        "title": "CashMed (Fintech de Saúde)",
+        "subtitle": "Plataforma financeira especializada em gestão de honorários médicos.",
+        "description": "Sistema que gerencia mais de R$ 10 milhões em honorários. Implementação de motor de cálculo para ofertas de antecipação de recebíveis, garantindo precisão matemática e segurança transacional."
+      }
+    },
+    "education": {
+      "title": "Formação & Pesquisa",
+      "ufg": {
+        "title": "Ciência da Computação",
+        "institution": "Universidade Federal de Goiás (UFG)",
+        "period": "2022 - Atual"
+      },
+      "research": {
+        "title": "Pesquisador em IA Generativa e NLP",
+        "event": "WebMedia 2025",
+        "badge": "Publicação",
+        "description": "Desenvolvimento de um agente conversacional de suporte emocional para ansiedade leve a moderada, utilizando arquitetura modular e multiagente. O projeto introduz uma modelagem dimensional da ansiedade em três eixos (medo, tensão e preocupação) para promover interações responsivas baseadas em escuta ativa. O sistema aplica técnicas de reestruturação cognitiva e manejo de ansiedade, preservando rigorosos critérios éticos e técnicos sem finalidade diagnóstica."
+      }
+    },
+    "skills": {
+      "title": "Competências Técnicas",
+      "fullstack": {
+        "title": "Desenvolvimento Full Stack"
+      },
+      "ai": {
+        "title": "IA & Engenharia de Dados"
+      },
+      "automation": {
+        "title": "Automação & Cloud"
+      },
+      "strategy": {
+        "title": "Estratégia & Liderança"
+      }
+    },
+    "languages": {
+      "title": "Idiomas",
+      "pt": {
+        "name": "Português",
+        "level": "Nativo"
+      },
+      "en": {
+        "name": "Inglês",
+        "level": "Intermediário"
+      }
+    }
+  },
+  "contact": {
+    "title": "Entre em Contato",
+    "subtitle": "Tem um projeto em mente ou quer bater um papo? Ficarei feliz em ouvir você!",
+    "toast": {
+      "success": "Mensagem enviada com sucesso! Entrarei em contato em breve.",
+      "error": "Erro ao enviar mensagem. Tente novamente."
+    },
+    "info": {
+      "title": "Informações de Contato",
+      "email": "Email",
+      "location": "Localização",
+      "locationValue": "Brasil"
+    },
+    "responseTime": {
+      "title": "Tempo de Resposta",
+      "description": "Geralmente respondo em até 24 horas úteis."
+    },
+    "availability": {
+      "title": "Disponível para novos projetos",
+      "description": "Atualmente aceito freelances e projetos de médio/longo prazo."
+    },
+    "form": {
+      "title": "Envie uma Mensagem",
+      "description": "Preencha o formulário abaixo e entrarei em contato o mais breve possível.",
+      "nameLabel": "Nome *",
+      "namePlaceholder": "Seu nome",
+      "emailLabel": "Email *",
+      "emailPlaceholder": "seu@email.com",
+      "whatsappLabel": "WhatsApp *",
+      "whatsappPlaceholder": "(00) 00000-0000",
+      "sending": "Enviando...",
+      "submit": "Enviar Mensagem"
+    }
+  },
+  "projects": {
+    "premium": "COLEÇÃO PREMIUM",
+    "title": "PROJETOS",
+    "subtitle": "Uma curadoria de soluções de alta engenharia, onde a <emphasis>precisão técnica</emphasis> encontra a <emphasis>arte digital</emphasis>.",
+    "empty": "Nenhum projeto encontrado no momento.",
+    "featured": "Destaque",
+    "cta": {
+      "title": "Tem um projeto visionário em mente?",
+      "button": "INICIAR COLABORAÇÃO"
+    }
+  },
+  "auth": {
+    "loginPage": {
+      "title": "Bem-vindo de volta",
+      "subtitle": "Entre com suas credenciais para acessar o painel administrativo",
+      "backToSite": "← Voltar para o site"
+    },
+    "loginForm": {
+      "emailLabel": "Email",
+      "emailPlaceholder": "seu@email.com",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "••••••••",
+      "showPassword": "Mostrar senha",
+      "hidePassword": "Esconder senha",
+      "loading": "Entrando...",
+      "submit": "Entrar",
+      "success": "Login realizado com sucesso!",
+      "errors": {
+        "invalidCredentials": "Email ou senha incorretos",
+        "generic": "Erro ao fazer login. Tente novamente."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Artigos sobre desenvolvimento web, programação, tecnologia e dicas para quem está na área de tecnologia.",
+    "empty": {
+      "title": "Nenhum artigo encontrado",
+      "filtered": "Tente remover os filtros para ver mais artigos.",
+      "default": "Os artigos serão publicados aqui em breve."
+    }
+  },
+  "validation": {
+    "login": {
+      "emailInvalid": "Email inválido",
+      "passwordMin": "A senha deve ter no mínimo 6 caracteres"
+    },
+    "contact": {
+      "nameMin": "Nome deve ter pelo menos 2 caracteres",
+      "emailInvalid": "Email inválido",
+      "whatsappMin": "WhatsApp deve ter pelo menos 10 caracteres"
+    }
+  }
+}
