@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import type { ProjectQueryResponse, ProjectTranslation, Technology, Tag } from '@/lib/types/database'
 
 // GET /api/projects/[id] - Get a single project
 export async function GET(
@@ -37,19 +38,19 @@ export async function GET(
     }
 
     // Get translations
-    const translations = data.translations || []
-    const ptTranslation = translations.find((t: any) => t.language === 'pt-BR')
-    const enTranslation = translations.find((t: any) => t.language === 'en')
+    const translations = (data.translations || []) as ProjectTranslation[]
+    const ptTranslation = translations.find((t) => t.language === 'pt-BR')
+    const enTranslation = translations.find((t) => t.language === 'en')
     const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
 
     // Get technology and tag IDs for the form
-    const technology_ids = data.technologies?.map((pt: any) => pt.technology?.id).filter(Boolean) || []
-    const tag_ids = data.tags?.map((pt: any) => pt.tag?.id).filter(Boolean) || []
+    const technology_ids = data.technologies?.map((pt) => pt.technology?.id).filter((id): id is number => Boolean(id)) || []
+    const tag_ids = data.tags?.map((pt) => pt.tag?.id).filter((id): id is number => Boolean(id)) || []
 
     const baseProject = {
       ...data,
-      technologies: data.technologies?.map((pt: any) => pt.technology) || [],
-      tags: data.tags?.map((pt: any) => pt.tag) || [],
+      technologies: data.technologies?.map((pt) => pt.technology).filter((t): t is Technology => t !== null && t !== undefined) || [],
+      tags: data.tags?.map((pt) => pt.tag).filter((t): t is Tag => t !== null && t !== undefined) || [],
       technology_ids,
       tag_ids,
     }

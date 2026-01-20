@@ -77,8 +77,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   // Transform the data
   const project = {
     ...projectData,
-    technologies: projectData.technologies?.map((pt: any) => pt.technology).filter(Boolean) || [],
-    tags: projectData.tags?.map((pt: any) => pt.tag).filter(Boolean) || [],
+    technologies: (projectData.technologies as Array<{ technology: unknown }> | null)?.map((pt) => pt.technology).filter(Boolean) || [],
+    tags: (projectData.tags as Array<{ tag: unknown }> | null)?.map((pt) => pt.tag).filter(Boolean) || [],
     images: projectData.images || [],
   }
 
@@ -149,8 +149,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <h2 className="text-2xl font-bold">Galeria</h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 {project.images
-                  .sort((a: any, b: any) => a.display_order - b.display_order)
-                  .map((image: any) => (
+                  .sort((a: { display_order: number }, b: { display_order: number }) => a.display_order - b.display_order)
+                  .map((image: { id: number; image_url: string; caption?: string | null; display_order: number }) => (
                     <div
                       key={image.id}
                       className="relative aspect-video rounded-lg overflow-hidden border border-border"

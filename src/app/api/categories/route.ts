@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import type { CategoryTranslation } from '@/lib/types/database'
 
 // GET /api/categories
 export async function GET(request: NextRequest) {
@@ -23,9 +24,9 @@ export async function GET(request: NextRequest) {
     }
 
     const categories = data?.map((category) => {
-      const translations = category.translations || []
-      const ptTranslation = translations.find((t: any) => t.language === 'pt-BR')
-      const enTranslation = translations.find((t: any) => t.language === 'en')
+      const translations = (category.translations || []) as CategoryTranslation[]
+      const ptTranslation = translations.find((t) => t.language === 'pt-BR')
+      const enTranslation = translations.find((t) => t.language === 'en')
       const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
 
       if (include_translations) {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { calculateReadingTime } from '@/lib/utils/reading-time'
+import type { ArticleQueryResponse, ArticleTranslation, Tag } from '@/lib/types/database'
 
 // GET /api/articles - List all articles
 export async function GET(request: NextRequest) {
@@ -48,16 +49,16 @@ export async function GET(request: NextRequest) {
     }
 
     // Transform the data
-    const articles = data?.map((article) => {
-      const translations = article.translations || []
-      const ptTranslation = translations.find((t: any) => t.language === 'pt-BR')
-      const enTranslation = translations.find((t: any) => t.language === 'en')
+    const articles = data?.map((article: ArticleQueryResponse) => {
+      const translations = (article.translations || []) as ArticleTranslation[]
+      const ptTranslation = translations.find((t) => t.language === 'pt-BR')
+      const enTranslation = translations.find((t) => t.language === 'en')
       const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
 
       const baseArticle = {
         ...article,
-        tags: article.tags?.map((at: any) => at.tag) || [],
-        projects: article.projects?.map((ap: any) => ap.project) || [],
+        tags: article.tags?.map((at) => at.tag).filter((t): t is Tag => t !== null) || [],
+        projects: article.projects?.map((ap) => ap.project).filter((p) => p !== null) || [],
       }
 
       if (include_translations) {
@@ -83,8 +84,8 @@ export async function GET(request: NextRequest) {
     // Filter by tag if specified
     let filteredArticles = articles
     if (tag) {
-      filteredArticles = filteredArticles?.filter((a: any) =>
-        a.tags?.some((t: any) => t.slug === tag)
+      filteredArticles = filteredArticles?.filter((a) =>
+        a.tags?.some((t) => t.slug === tag)
       )
     }
 

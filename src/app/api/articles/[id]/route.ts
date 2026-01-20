@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { calculateReadingTime } from '@/lib/utils/reading-time'
+import type { ArticleQueryResponse, ArticleTranslation, Tag, Project } from '@/lib/types/database'
 
 // GET /api/articles/[id] - Get a single article
 export async function GET(
@@ -38,19 +39,19 @@ export async function GET(
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    const translations = data.translations || []
-    const ptTranslation = translations.find((t: any) => t.language === 'pt-BR')
-    const enTranslation = translations.find((t: any) => t.language === 'en')
+    const translations = (data.translations || []) as ArticleTranslation[]
+    const ptTranslation = translations.find((t) => t.language === 'pt-BR')
+    const enTranslation = translations.find((t) => t.language === 'en')
     const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
 
     // Get IDs for the form
-    const tag_ids = data.tags?.map((at: any) => at.tag?.id).filter(Boolean) || []
-    const project_ids = data.projects?.map((ap: any) => ap.project?.id).filter(Boolean) || []
+    const tag_ids = data.tags?.map((at) => at.tag?.id).filter((id): id is number => Boolean(id)) || []
+    const project_ids = data.projects?.map((ap) => ap.project?.id).filter((id): id is number => Boolean(id)) || []
 
     const baseArticle = {
       ...data,
-      tags: data.tags?.map((at: any) => at.tag) || [],
-      projects: data.projects?.map((ap: any) => ap.project) || [],
+      tags: data.tags?.map((at) => at.tag).filter((t): t is Tag => t !== null && t !== undefined) || [],
+      projects: data.projects?.map((ap) => ap.project).filter((p): p is Pick<Project, 'id' | 'title' | 'slug' | 'cover_image_url'> => p !== null && p !== undefined) || [],
       tag_ids,
       project_ids,
     }

@@ -30,20 +30,20 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const locale = await getLocale()
   const supabase = await createClient()
 
-  const { data: article } = (await supabase
+  const { data: article } = await supabase
     .from('articles')
     .select('title, summary, meta_description, cover_image_url, translations:article_translations(*)')
     .eq('slug', slug)
     .eq('status', 'published')
-    .single()) as any
+    .single()
 
   if (!article) {
     return { title: locale === 'en' ? 'Article not found' : 'Artigo não encontrado' }
   }
 
-  const translations = (article as any).translations || []
-  const ptTranslation = translations.find((tr: any) => tr.language === 'pt-BR')
-  const enTranslation = translations.find((tr: any) => tr.language === 'en')
+  const translations = (article.translations || []) as Array<{ language: string; title?: string; meta_description?: string | null; summary?: string | null }>
+  const ptTranslation = translations.find((tr) => tr.language === 'pt-BR')
+  const enTranslation = translations.find((tr) => tr.language === 'en')
   const currentTranslation = locale === 'en' ? enTranslation || ptTranslation : ptTranslation
 
   const title = currentTranslation?.title || article.title
@@ -79,7 +79,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const supabase = await createClient()
 
   // Get article with relations
-  const { data: articleData, error } = (await supabase
+  const { data: articleData, error } = await supabase
     .from('articles')
     .select(`
       *,
@@ -95,7 +95,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     `)
     .eq('slug', slug)
     .eq('status', 'published')
-    .single()) as any
+    .single()
 
   if (error || !articleData) {
     notFound()
@@ -104,13 +104,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   // Transform the data
   const article = {
     ...articleData,
-    tags: articleData.tags?.map((at: any) => at.tag).filter(Boolean) || [],
-    projects: articleData.projects?.map((ap: any) => ap.project).filter(Boolean) || [],
+    tags: (articleData.tags as Array<{ tag: unknown }> | null)?.map((at) => at.tag).filter(Boolean) || [],
+    projects: (articleData.projects as Array<{ project: unknown }> | null)?.map((ap) => ap.project).filter(Boolean) || [],
   }
 
-  const translations = article.translations || []
-  const ptTranslation = translations.find((tr: any) => tr.language === 'pt-BR')
-  const enTranslation = translations.find((tr: any) => tr.language === 'en')
+  const translations = (article.translations || []) as Array<{ language: string; title?: string; summary?: string | null; content?: string; meta_description?: string | null }>
+  const ptTranslation = translations.find((tr) => tr.language === 'pt-BR')
+  const enTranslation = translations.find((tr) => tr.language === 'en')
   const currentTranslation = locale === 'en' ? enTranslation || ptTranslation : ptTranslation
 
   if (currentTranslation) {
@@ -120,9 +120,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     article.meta_description = currentTranslation.meta_description || article.meta_description
   }
 
-  const categoryTranslations = article.category?.translations || []
-  const ptCategory = categoryTranslations.find((tr: any) => tr.language === 'pt-BR')
-  const enCategory = categoryTranslations.find((tr: any) => tr.language === 'en')
+  const categoryTranslations = (article.category?.translations || []) as Array<{ language: string; name?: string; description?: string | null }>
+  const ptCategory = categoryTranslations.find((tr) => tr.language === 'pt-BR')
+  const enCategory = categoryTranslations.find((tr) => tr.language === 'en')
   const currentCategory = locale === 'en' ? enCategory || ptCategory : ptCategory
 
   if (article.category && currentCategory) {
@@ -132,7 +132,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   // Increment view count
-  await (supabase as any).rpc('increment_article_views', { article_id: article.id })
+  await supabase.rpc('increment_article_views', { article_id: article.id })
 
   const authorInitials = article.author?.full_name
     ?.split(' ')
@@ -231,7 +231,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         {article.tags && article.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-10">
             {article.tags.map((tag: any) => (
-              <Link key={tag.id} href={`/blog?tag=${tag.slug}` as any}>
+              <Link key={tag.id} href={`/blog?tag=${tag.slug}`}>
                 <Badge variant="secondary" className="hover:bg-accent">
                   #{tag.name}
                 </Badge>
@@ -253,7 +253,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <h2 className="text-2xl font-bold mb-6">Projetos Relacionados</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {article.projects.map((project: any) => (
-                <Link key={project.id} href={`/projetos/${project.slug}` as any}>
+                <Link key={project.id} href={`/projetos/${project.slug}`}>
                   <Card className="hover:shadow-md transition-shadow">
                     <CardContent className="p-4 flex items-center gap-4">
                       {project.cover_image_url && (

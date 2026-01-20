@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import type { TagTranslation } from '@/lib/types/database'
 
 // GET /api/tags
 export async function GET(request: NextRequest) {
@@ -22,9 +23,9 @@ export async function GET(request: NextRequest) {
     }
 
     const tags = data?.map((tag) => {
-      const translations = tag.translations || []
-      const ptTranslation = translations.find((t: any) => t.language === 'pt-BR')
-      const enTranslation = translations.find((t: any) => t.language === 'en')
+      const translations = (tag.translations || []) as TagTranslation[]
+      const ptTranslation = translations.find((t) => t.language === 'pt-BR')
+      const enTranslation = translations.find((t) => t.language === 'en')
       const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
 
       if (include_translations) {

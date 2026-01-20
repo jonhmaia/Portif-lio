@@ -369,3 +369,52 @@ export interface PaginatedResponse<T> {
   limit: number
   totalPages: number
 }
+
+// ===========================================
+// SUPABASE QUERY RESPONSE TYPES
+// ===========================================
+
+// Types for Supabase queries with relations
+export interface ArticleTagRelation {
+  tag: Tag
+}
+
+export interface ArticleProjectRelation {
+  project: Pick<Project, 'id' | 'title' | 'slug'>
+}
+
+export interface ProjectTechnologyRelation {
+  technology: Technology
+}
+
+export interface ProjectTagRelation {
+  tag: Tag
+}
+
+// Article query response with relations
+export interface ArticleQueryResponse extends Article {
+  author: Profile | null
+  category: Category | null
+  tags?: ArticleTagRelation[]
+  projects?: ArticleProjectRelation[]
+  translations?: ArticleTranslation[]
+}
+
+// Project query response with relations
+export interface ProjectQueryResponse extends Project {
+  technologies?: ProjectTechnologyRelation[]
+  tags?: ProjectTagRelation[]
+  images?: ProjectImage[]
+  translations?: ProjectTranslation[]
+}
+
+// Helper types for transformed data
+export interface TransformedArticle extends Omit<ArticleQueryResponse, 'tags' | 'projects' | 'translations'> {
+  tags?: Tag[]
+  projects?: Pick<Project, 'id' | 'title' | 'slug'>[]
+}
+
+export interface TransformedProject extends Omit<ProjectQueryResponse, 'technologies' | 'tags' | 'translations'> {
+  technologies?: Technology[]
+  tags?: Tag[]
+}

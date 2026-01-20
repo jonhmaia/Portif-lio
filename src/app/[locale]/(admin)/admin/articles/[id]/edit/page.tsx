@@ -25,22 +25,22 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
       translations:article_translations(*)
     `)
     .eq('id', parseInt(id))
-    .single()) as any
+    .single()
 
   if (error || !articleData) {
     notFound()
   }
 
   // Get translations
-  const translations = articleData.translations || []
-  const ptTranslation = translations.find((t: any) => t.language === 'pt-BR')
-  const enTranslation = translations.find((t: any) => t.language === 'en')
+  const translations = (articleData.translations || []) as Array<{ language: string; [key: string]: unknown }>
+  const ptTranslation = translations.find((t) => t.language === 'pt-BR')
+  const enTranslation = translations.find((t) => t.language === 'en')
 
   // Transform data
   const article = {
     ...articleData,
-    tag_ids: articleData.tags?.map((t: any) => t.tag_id) || [],
-    project_ids: articleData.projects?.map((p: any) => p.project_id) || [],
+    tag_ids: (articleData.tags as Array<{ tag_id?: number }> | null)?.map((t) => t.tag_id).filter((id): id is number => Boolean(id)) || [],
+    project_ids: (articleData.projects as Array<{ project_id?: number }> | null)?.map((p) => p.project_id).filter((id): id is number => Boolean(id)) || [],
     translations: {
       pt: ptTranslation || {
         title: articleData.title,

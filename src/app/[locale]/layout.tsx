@@ -62,7 +62,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>
 }>) {
   const { locale } = await params
-  const resolvedLocale = routing.locales.includes(locale as any)
+  const resolvedLocale = routing.locales.includes(locale as Locale)
     ? (locale as Locale)
     : routing.defaultLocale
 

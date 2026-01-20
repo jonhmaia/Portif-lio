@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { useTranslations } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 
 interface ResumePageProps {
   params: Promise<{ locale: string }>
@@ -23,8 +22,12 @@ export async function generateMetadata({ params }: ResumePageProps): Promise<Met
   }
 }
 
-export default function ResumePage() {
-  const t = useTranslations('resume')
+export default async function ResumePage() {
+  const locale = await getLocale()
+  const t = await getTranslations('resume')
+  
+  // Define o caminho do PDF baseado no idioma
+  const pdfPath = locale === 'en' ? '/Curriculo-En.pdf' : '/Curriculo-Pt.pdf'
 
   return (
     <div className="container py-12 md:py-16 max-w-4xl">
@@ -65,9 +68,11 @@ export default function ResumePage() {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <Button size="sm" className="gap-2">
-              <Download className="h-4 w-4" />
-              {t('downloadPdf')}
+            <Button size="sm" className="gap-2" asChild>
+              <a href={pdfPath} download>
+                <Download className="h-4 w-4" />
+                {t('downloadPdf')}
+              </a>
             </Button>
             <Button variant="outline" size="sm" asChild>
               <Link href="https://www.linkedin.com/in/joaomarcosmaia" target="_blank">

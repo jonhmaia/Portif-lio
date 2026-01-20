@@ -38,16 +38,16 @@ export default async function ProjectsPage() {
   // Transform data to match the expected format
   const projects =
     projectsData?.map((project) => {
-      const translations = project.translations || []
-      const ptTranslation = translations.find((tr: any) => tr.language === 'pt-BR')
-      const enTranslation = translations.find((tr: any) => tr.language === 'en')
+      const translations = (project.translations || []) as Array<{ language: string; title?: string; subtitle?: string | null; short_description?: string | null; full_description?: string | null; meta_description?: string | null }>
+      const ptTranslation = translations.find((tr) => tr.language === 'pt-BR')
+      const enTranslation = translations.find((tr) => tr.language === 'en')
       const currentTranslation = locale === 'en' ? enTranslation || ptTranslation : ptTranslation
 
       return {
         ...project,
         technologies:
-          project.technologies?.map((pt: any) => pt.technology).filter(Boolean) || [],
-        tags: project.tags?.map((pt: any) => pt.tag).filter(Boolean) || [],
+          project.technologies?.map((pt: { technology: unknown } | null) => pt?.technology).filter(Boolean) || [],
+        tags: project.tags?.map((pt: { tag: unknown } | null) => pt?.tag).filter(Boolean) || [],
         title: currentTranslation?.title || project.title,
         subtitle: currentTranslation?.subtitle || project.subtitle,
         short_description:

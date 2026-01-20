@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import type { ProjectQueryResponse, ProjectTranslation, Technology, Tag } from '@/lib/types/database'
 
 // GET /api/projects - List all projects
 export async function GET(request: NextRequest) {
@@ -51,18 +52,18 @@ export async function GET(request: NextRequest) {
     }
 
     // Transform the data to flatten relations and handle translations
-    const projects = data?.map((project) => {
-      const translations = project.translations || []
-      const ptTranslation = translations.find((t: any) => t.language === 'pt-BR')
-      const enTranslation = translations.find((t: any) => t.language === 'en')
+    const projects = data?.map((project: ProjectQueryResponse) => {
+      const translations = (project.translations || []) as ProjectTranslation[]
+      const ptTranslation = translations.find((t) => t.language === 'pt-BR')
+      const enTranslation = translations.find((t) => t.language === 'en')
       
       // Get translation based on requested language
       const currentTranslation = lang === 'en' ? (enTranslation || ptTranslation) : ptTranslation
 
       const baseProject = {
         ...project,
-        technologies: project.technologies?.map((pt: any) => pt.technology) || [],
-        tags: project.tags?.map((pt: any) => pt.tag) || [],
+        technologies: project.technologies?.map((pt) => pt.technology).filter((t): t is Technology => t !== null) || [],
+        tags: project.tags?.map((pt) => pt.tag).filter((t): t is Tag => t !== null) || [],
       }
 
       if (include_translations) {
@@ -90,13 +91,13 @@ export async function GET(request: NextRequest) {
     // Filter by technology or tag if specified (post-query filtering)
     let filteredProjects = projects
     if (technology) {
-      filteredProjects = filteredProjects?.filter((p: any) => 
-        p.technologies?.some((t: any) => t.slug === technology)
+      filteredProjects = filteredProjects?.filter((p) => 
+        p.technologies?.some((t) => t.slug === technology)
       )
     }
     if (tag) {
-      filteredProjects = filteredProjects?.filter((p: any) => 
-        p.tags?.some((t: any) => t.slug === tag)
+      filteredProjects = filteredProjects?.filter((p) => 
+        p.tags?.some((t) => t.slug === tag)
       )
     }
 

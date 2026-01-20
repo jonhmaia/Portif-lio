@@ -26,22 +26,22 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
       translations:project_translations(*)
     `)
     .eq('id', parseInt(id))
-    .single()) as any
+    .single()
 
   if (error || !projectData) {
     notFound()
   }
 
   // Get translations
-  const translations = projectData.translations || []
-  const ptTranslation = translations.find((t: any) => t.language === 'pt-BR')
-  const enTranslation = translations.find((t: any) => t.language === 'en')
+  const translations = (projectData.translations || []) as Array<{ language: string; [key: string]: unknown }>
+  const ptTranslation = translations.find((t) => t.language === 'pt-BR')
+  const enTranslation = translations.find((t) => t.language === 'en')
 
   // Transform data
   const project = {
     ...projectData,
-    technology_ids: projectData.technologies?.map((t: any) => t.technology_id) || [],
-    tag_ids: projectData.tags?.map((t: any) => t.tag_id) || [],
+    technology_ids: (projectData.technologies as Array<{ technology_id?: number }> | null)?.map((t) => t.technology_id).filter((id): id is number => Boolean(id)) || [],
+    tag_ids: (projectData.tags as Array<{ tag_id?: number }> | null)?.map((t) => t.tag_id).filter((id): id is number => Boolean(id)) || [],
     images: projectData.images || [],
     translations: {
       pt: ptTranslation || {

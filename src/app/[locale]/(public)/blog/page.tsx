@@ -44,19 +44,19 @@ async function ArticlesGrid({ category, tag }: { category?: string; tag?: string
   // Transform and filter articles
   let articles =
     articlesData?.map((article) => {
-      const translations = article.translations || []
-      const ptTranslation = translations.find((tr: any) => tr.language === 'pt-BR')
-      const enTranslation = translations.find((tr: any) => tr.language === 'en')
+      const translations = (article.translations || []) as Array<{ language: string; title?: string; summary?: string; content?: string; meta_description?: string }>
+      const ptTranslation = translations.find((tr) => tr.language === 'pt-BR')
+      const enTranslation = translations.find((tr) => tr.language === 'en')
       const currentTranslation = locale === 'en' ? enTranslation || ptTranslation : ptTranslation
 
-      const categoryTranslations = article.category?.translations || []
-      const ptCategory = categoryTranslations.find((tr: any) => tr.language === 'pt-BR')
-      const enCategory = categoryTranslations.find((tr: any) => tr.language === 'en')
+      const categoryTranslations = (article.category?.translations || []) as Array<{ language: string; name?: string; description?: string | null }>
+      const ptCategory = categoryTranslations.find((tr) => tr.language === 'pt-BR')
+      const enCategory = categoryTranslations.find((tr) => tr.language === 'en')
       const currentCategory = locale === 'en' ? enCategory || ptCategory : ptCategory
 
       return {
         ...article,
-        tags: article.tags?.map((at: any) => at.tag).filter(Boolean) || [],
+        tags: article.tags?.map((at: { tag: { slug?: string } | null }) => at.tag).filter(Boolean) || [],
         title: currentTranslation?.title || article.title,
         summary: currentTranslation?.summary || article.summary,
         content: currentTranslation?.content || article.content,
@@ -73,7 +73,7 @@ async function ArticlesGrid({ category, tag }: { category?: string; tag?: string
 
   if (tag) {
     articles = articles.filter((a) =>
-      a.tags?.some((t: any) => t.slug === tag)
+      a.tags?.some((t: { slug?: string }) => t.slug === tag)
     )
   }
 
