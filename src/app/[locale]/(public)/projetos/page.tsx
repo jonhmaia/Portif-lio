@@ -100,99 +100,125 @@ export default async function ProjectsPage() {
         </div>
       </section>
 
-      {/* Gallery Grid - Design Moderno com Cards Limpos */}
-      <section className="container mx-auto px-6 md:px-12 pb-32">
+      {/* Gallery Grid - Design Moderno Aprimorado */}
+      <section className="container mx-auto px-4 sm:px-6 md:px-12 pb-24 md:pb-32">
         {projects.length === 0 ? (
-          <div className="text-center py-20 text-muted-foreground">
-            <p className="text-xl font-light">{t('empty')}</p>
+          <div className="text-center py-32 space-y-4">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-muted/50 mb-4">
+              <Crown className="w-10 h-10 text-muted-foreground/50" />
+            </div>
+            <p className="text-xl md:text-2xl font-medium text-muted-foreground">{t('empty')}</p>
+            <p className="text-sm text-muted-foreground/70 max-w-md mx-auto">
+              Novos projetos serão adicionados em breve. Fique atento!
+            </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {projects.map((project) => (
               <Link 
                 href={`/projetos/${project.slug}`}
                 key={project.id}
-                className={`group flex flex-col bg-card/40 backdrop-blur-md border border-border/40 rounded-3xl overflow-hidden hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 ${project.is_featured ? 'md:col-span-2 lg:col-span-2' : ''}`}
+                className={`group relative flex flex-col bg-card/60 backdrop-blur-md border border-border/50 rounded-2xl md:rounded-3xl overflow-hidden hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1 ${project.is_featured ? 'md:col-span-2 lg:col-span-2 ring-2 ring-primary/20' : ''}`}
               >
-                {/* Image Section - Cinematic */}
-                <div className={`relative overflow-hidden ${project.is_featured ? 'aspect-[2.2/1]' : 'aspect-[1.6/1]'}`}>
+                {/* Image Section - Melhorado com Next Image */}
+                <div className={`relative overflow-hidden ${project.is_featured ? 'aspect-[2.2/1]' : 'aspect-[16/10]'} bg-gradient-to-br from-primary/5 to-accent/5`}>
                   {project.cover_image_url ? (
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 ease-out group-hover:scale-110"
-                      style={{ backgroundImage: `url(${project.cover_image_url})` }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-40" />
-                    </div>
+                    <>
+                      <Image
+                        src={project.cover_image_url}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+                        sizes={project.is_featured ? "(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw" : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
+                        priority={project.is_featured}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-500" />
+                    </>
                   ) : (
-                    <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20`} />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-transparent opacity-40" />
                   )}
                   
-                  {/* Badges Flutuantes */}
-                  <div className="absolute top-5 left-5 z-10 flex gap-2">
+                  {/* Badges Flutuantes - Melhorados */}
+                  <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
                     {project.is_featured && (
-                      <Badge className="bg-yellow-500/90 text-white border-none shadow-lg backdrop-blur-md uppercase tracking-wider text-[10px] py-1.5 px-3 font-bold">
+                      <Badge className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white border-none shadow-xl backdrop-blur-md uppercase tracking-wider text-[10px] py-1.5 px-3 font-bold animate-pulse">
                         <Star className="w-3 h-3 mr-1.5 fill-current" /> {t('featured')}
                       </Badge>
                     )}
                   </div>
 
-                  {/* External Links - Aparecem suavemente */}
-                  <div className="absolute top-5 right-5 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-[-10px] group-hover:translate-y-0 delay-100">
+                  {/* External Links - Melhorados */}
+                  <div className="absolute top-4 right-4 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-[-5px] group-hover:translate-y-0">
                     {project.repo_url && (
-                      <div className="rounded-full bg-background/60 backdrop-blur-xl hover:bg-background text-foreground h-10 w-10 shadow-lg border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110" onClick={(e) => e.stopPropagation()}>
-                        <a href={project.repo_url} target="_blank" rel="noopener noreferrer">
-                          <Github className="w-5 h-5" />
-                        </a>
-                      </div>
+                      <a 
+                        href={project.repo_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="rounded-full bg-background/90 backdrop-blur-xl hover:bg-background text-foreground h-10 w-10 shadow-xl border border-border/50 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-primary"
+                      >
+                        <Github className="w-5 h-5" />
+                      </a>
                     )}
                     {project.deploy_url && (
-                      <div className="rounded-full bg-background/60 backdrop-blur-xl hover:bg-background text-foreground h-10 w-10 shadow-lg border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110" onClick={(e) => e.stopPropagation()}>
-                        <a href={project.deploy_url} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-5 h-5" />
-                        </a>
-                      </div>
+                      <a 
+                        href={project.deploy_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="rounded-full bg-background/90 backdrop-blur-xl hover:bg-background text-foreground h-10 w-10 shadow-xl border border-border/50 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-primary"
+                      >
+                        <ExternalLink className="w-5 h-5" />
+                      </a>
                     )}
                   </div>
                 </div>
 
                 {/* Content Section - Refinado */}
-                <div className="flex flex-col flex-grow p-8 space-y-6 relative">
+                <div className="flex flex-col flex-grow p-6 md:p-8 space-y-5 relative">
                   {/* Seta de Ação - Decorativa */}
-                  <div className="absolute top-8 right-8 text-muted-foreground/20 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500">
-                    <ArrowUpRight className="w-6 h-6" />
+                  <div className="absolute top-6 right-6 md:top-8 md:right-8 text-muted-foreground/30 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500">
+                    <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
 
-                  <div className="space-y-3 pr-8">
-                    <h3 className="text-2xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
+                  <div className="space-y-3 pr-12">
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
                       {project.title}
                     </h3>
                     {project.short_description && (
-                      <p className="text-muted-foreground/70 text-base leading-relaxed line-clamp-2 font-light">
+                      <p className="text-muted-foreground/80 text-sm md:text-base leading-relaxed line-clamp-2 font-normal">
                         {project.short_description}
                       </p>
                     )}
                   </div>
 
-                  {/* Tech Stack - Minimalista e Limpo */}
-                  <div className="mt-auto pt-6 border-t border-border/20 flex items-center justify-between">
+                  {/* Tech Stack - Melhorado */}
+                  <div className="mt-auto pt-5 border-t border-border/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     {project.technologies && project.technologies.length > 0 ? (
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.slice(0, 4).map((tech: any) => (
-                          <span key={tech.id} className="text-[11px] font-medium text-zinc-600 dark:text-zinc-300 bg-zinc-100/80 dark:bg-zinc-800/50 px-3 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-700/50 transition-colors group-hover:bg-zinc-200 dark:group-hover:bg-zinc-700 group-hover:text-zinc-900 dark:group-hover:text-white">
+                          <Badge 
+                            key={tech.id} 
+                            variant="secondary"
+                            className="text-[10px] md:text-xs font-medium px-2.5 py-1 border transition-all duration-300 group-hover:border-primary/50 group-hover:bg-primary/5"
+                          >
                             {tech.name}
-                          </span>
+                          </Badge>
                         ))}
                         {project.technologies.length > 4 && (
-                          <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100/50 dark:bg-zinc-800/30 px-3 py-1.5 rounded-full border border-zinc-200/50 dark:border-zinc-700/30">
+                          <Badge 
+                            variant="outline"
+                            className="text-[10px] md:text-xs font-medium px-2.5 py-1"
+                          >
                             +{project.technologies.length - 4}
-                          </span>
+                          </Badge>
                         )}
                       </div>
                     ) : <div />}
                     
                     {/* Texto sutil "Ver Detalhes" no hover */}
-                    <span className="text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0 hidden md:inline-block">
-                      Ver Detalhes
+                    <span className="text-xs font-semibold text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0 hidden sm:inline-flex items-center gap-1">
+                      Ver Detalhes <ArrowUpRight className="w-3 h-3" />
                     </span>
                   </div>
                 </div>
@@ -201,18 +227,33 @@ export default async function ProjectsPage() {
           </div>
         )}
 
-        {/* Call to Action - Moderno e Clean */}
-        <div className="mt-32 text-center space-y-10 max-w-2xl mx-auto">
-          <div className="w-px h-16 bg-gradient-to-b from-transparent via-primary/30 to-transparent mx-auto" />
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-            {t('cta.title')}
-          </h2>
-          <Button size="lg" className="rounded-full px-10 py-7 text-lg bg-foreground text-background hover:bg-foreground/80 font-medium shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300" asChild>
-            <Link href="/contact">
-              {t('cta.button')} <ArrowUpRight className="ml-2 w-5 h-5" />
-            </Link>
-          </Button>
-        </div>
+        {/* Call to Action - Melhorado */}
+        {projects.length > 0 && (
+          <div className="mt-24 md:mt-32 text-center space-y-8 max-w-3xl mx-auto">
+            <div className="relative">
+              <div className="w-px h-20 bg-gradient-to-b from-transparent via-primary/40 to-transparent mx-auto" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary/40 ring-4 ring-background" />
+            </div>
+            <div className="space-y-4">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground tracking-tight">
+                {t('cta.title')}
+              </h2>
+              <p className="text-muted-foreground/70 text-sm md:text-base max-w-lg mx-auto">
+                Vamos trabalhar juntos para criar algo incrível!
+              </p>
+            </div>
+            <Button 
+              size="lg" 
+              className="group/btn rounded-full px-8 md:px-10 py-6 md:py-7 text-base md:text-lg bg-gradient-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary font-semibold shadow-xl hover:shadow-2xl hover:shadow-primary/25 hover:-translate-y-1 transition-all duration-300" 
+              asChild
+            >
+              <Link href="/contact">
+                {t('cta.button')} 
+                <ArrowUpRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
+              </Link>
+            </Button>
+          </div>
+        )}
       </section>
     </div>
   )
