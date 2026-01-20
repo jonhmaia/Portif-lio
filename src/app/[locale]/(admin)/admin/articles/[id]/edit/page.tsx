@@ -16,7 +16,7 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
   const supabase = await createClient()
 
   // Fetch article with relations and translations
-  const { data: articleData, error } = (await supabase
+  const { data: articleData, error } = await supabase
     .from('articles')
     .select(`
       *,

@@ -16,7 +16,7 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
   const supabase = await createClient()
 
   // Fetch project with relations and translations
-  const { data: projectData, error } = (await supabase
+  const { data: projectData, error } = await supabase
     .from('projects')
     .select(`
       *,
