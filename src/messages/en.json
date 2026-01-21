@@ -225,6 +225,23 @@
       "button": "START COLLABORATION"
     }
   },
+  "projectDetail": {
+    "backToProjects": "Back to projects",
+    "gallery": "Gallery",
+    "viewDemo": "View Demo",
+    "viewCode": "View Code",
+    "statusLabel": "Status",
+    "createdAt": "Created at",
+    "views": "Views",
+    "technologies": "Technologies",
+    "tags": "Tags",
+    "status": {
+      "dev": "In Development",
+      "completed": "Completed",
+      "paused": "Paused",
+      "archived": "Archived"
+    }
+  },
   "auth": {
     "loginPage": {
       "title": "Welcome back",

@@ -225,6 +225,23 @@
       "button": "INICIAR COLABORAÇÃO"
     }
   },
+  "projectDetail": {
+    "backToProjects": "Voltar aos projetos",
+    "gallery": "Galeria",
+    "viewDemo": "Ver Demo",
+    "viewCode": "Ver Código",
+    "statusLabel": "Status",
+    "createdAt": "Criado em",
+    "views": "Visualizações",
+    "technologies": "Tecnologias",
+    "tags": "Tags",
+    "status": {
+      "dev": "Em Desenvolvimento",
+      "completed": "Concluído",
+      "paused": "Pausado",
+      "archived": "Arquivado"
+    }
+  },
   "auth": {
     "loginPage": {
       "title": "Bem-vindo de volta",
