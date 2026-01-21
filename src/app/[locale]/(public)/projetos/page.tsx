@@ -63,8 +63,8 @@ export default async function ProjectsPage() {
       
       {/* Background Animation & Gradient */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[100px]" />
+        <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-primary/5 dark:bg-primary/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-500/5 dark:bg-blue-500/10 blur-[100px]" />
       </div>
       <div className="opacity-60 fixed inset-0 pointer-events-none z-0">
         <FlowingLights />
@@ -97,13 +97,25 @@ export default async function ProjectsPage() {
               <Link 
                 href={`/projetos/${project.slug}` as any}
                 key={project.id}
-                className={`group relative flex flex-col bg-white/5 dark:bg-black/20 backdrop-blur-xl border border-white/10 dark:border-white/5 rounded-3xl overflow-hidden hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 ${project.is_featured ? 'md:col-span-2 lg:col-span-2' : ''}`}
+                className={`group relative flex flex-col rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 ${project.is_featured ? 'md:col-span-2 lg:col-span-2' : ''}`}
               >
-                {/* Glass Gradient Overlay on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0" />
+                {/* Glassmorphism Card Container */}
+                <div className="absolute inset-0 bg-white/40 dark:bg-white/[0.03] backdrop-blur-2xl rounded-3xl" />
+                
+                {/* Glass Border Effect */}
+                <div className="absolute inset-0 rounded-3xl border border-white/50 dark:border-white/10 group-hover:border-primary/40 transition-colors duration-500" />
+                
+                {/* Inner Glow */}
+                <div className="absolute inset-0 rounded-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]" />
+                
+                {/* Outer Shadow */}
+                <div className="absolute inset-0 rounded-3xl shadow-xl shadow-black/5 dark:shadow-black/20 group-hover:shadow-2xl group-hover:shadow-primary/20 transition-shadow duration-500" />
+                
+                {/* Gradient Shine on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent dark:from-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
 
                 {/* Image Section */}
-                <div className={`relative overflow-hidden ${project.is_featured ? 'aspect-[2/1]' : 'aspect-[4/3]'} w-full`}>
+                <div className={`relative overflow-hidden ${project.is_featured ? 'aspect-[2/1]' : 'aspect-[4/3]'} w-full z-10`}>
                   {project.cover_image_url ? (
                     <>
                       <Image
@@ -114,16 +126,16 @@ export default async function ProjectsPage() {
                         sizes={project.is_featured ? "(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw" : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
                         priority={project.is_featured}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent transition-opacity duration-300" />
                     </>
                   ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 dark:from-white/5 dark:to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-purple-500/5 to-blue-500/10 dark:from-primary/20 dark:via-purple-500/10 dark:to-blue-500/20" />
                   )}
                   
                   {/* Featured Badge */}
                   <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
                     {project.is_featured && (
-                      <Badge className="bg-yellow-500/20 text-yellow-200 border-yellow-500/30 backdrop-blur-md uppercase tracking-wider text-[10px] py-1 px-3 font-bold shadow-lg">
+                      <Badge className="bg-amber-500/80 backdrop-blur-md text-white border border-amber-400/50 uppercase tracking-wider text-[10px] py-1 px-3 font-bold shadow-lg">
                         <Star className="w-3 h-3 mr-1.5 fill-current" /> {t('featured')}
                       </Badge>
                     )}
@@ -133,7 +145,7 @@ export default async function ProjectsPage() {
                   <div className="absolute top-4 right-4 z-10 flex gap-2 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                     {project.repo_url && (
                       <span 
-                        className="rounded-full bg-black/50 backdrop-blur-md text-white h-9 w-9 flex items-center justify-center border border-white/10 hover:bg-primary hover:border-primary transition-colors"
+                        className="rounded-full bg-white/20 backdrop-blur-xl text-white h-9 w-9 flex items-center justify-center border border-white/30 hover:bg-primary hover:border-primary transition-colors shadow-lg"
                       >
                         <Github className="w-4 h-4" />
                       </span>
@@ -144,11 +156,11 @@ export default async function ProjectsPage() {
                 {/* Content Section */}
                 <div className="flex flex-col flex-grow p-6 md:p-8 space-y-4 relative z-10">
                   <div className="space-y-2">
-                    <h3 className="text-2xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                    <h3 className="text-2xl font-bold text-zinc-800 dark:text-white tracking-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
                       {project.title}
                     </h3>
                     {project.short_description && (
-                      <p className="text-muted-foreground/80 text-sm leading-relaxed line-clamp-2">
+                      <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed line-clamp-2">
                         {project.short_description}
                       </p>
                     )}
@@ -161,20 +173,20 @@ export default async function ProjectsPage() {
                         {project.technologies.slice(0, 3).map((tech: any) => (
                           <div 
                             key={tech.id} 
-                            className="text-[10px] uppercase tracking-wider font-semibold px-2 py-1 rounded-md bg-white/5 border border-white/10 text-muted-foreground"
+                            className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-lg bg-white/50 dark:bg-white/10 backdrop-blur-sm border border-white/60 dark:border-white/10 text-zinc-700 dark:text-zinc-300"
                           >
                             {tech.name}
                           </div>
                         ))}
                         {project.technologies.length > 3 && (
-                          <div className="text-[10px] font-semibold px-2 py-1 rounded-md bg-white/5 border border-white/10 text-muted-foreground">
+                          <div className="text-[10px] font-semibold px-2.5 py-1 rounded-lg bg-white/50 dark:bg-white/10 backdrop-blur-sm border border-white/60 dark:border-white/10 text-zinc-600 dark:text-zinc-400">
                             +{project.technologies.length - 3}
                           </div>
                         )}
                       </div>
                     ) : <div />}
                     
-                    <div className="rounded-full p-2 bg-white/5 border border-white/10 group-hover:bg-primary group-hover:border-primary group-hover:text-primary-foreground transition-all duration-300">
+                    <div className="rounded-full p-2.5 bg-white/50 dark:bg-white/10 backdrop-blur-sm border border-white/60 dark:border-white/20 text-zinc-600 dark:text-zinc-300 group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-300 shadow-sm">
                       <ArrowUpRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -198,7 +210,7 @@ export default async function ProjectsPage() {
             </div>
             <Button 
               size="lg" 
-              className="rounded-full px-8 py-6 text-base bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 text-foreground hover:scale-105 transition-all duration-300 shadow-xl" 
+              className="rounded-full px-8 py-6 text-base bg-white/40 dark:bg-white/10 backdrop-blur-xl border border-white/60 dark:border-white/20 text-zinc-800 dark:text-white hover:bg-white/60 dark:hover:bg-white/20 hover:scale-105 hover:border-primary/50 transition-all duration-300 shadow-xl shadow-black/5 dark:shadow-black/20 font-semibold" 
               asChild
             >
               <Link href="/contact">
