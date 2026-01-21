@@ -49,10 +49,14 @@ export async function GET(
     const technology_ids = (typedData.technologies as any)?.map((pt: any) => pt.technology?.id).filter((id: any): id is number => Boolean(id)) || []
     const tag_ids = (typedData.tags as any)?.map((pt: any) => pt.tag?.id).filter((id: any): id is number => Boolean(id)) || []
 
+    // Sort images by display_order
+    const sortedImages = (typedData.images || []).sort((a: any, b: any) => a.display_order - b.display_order)
+
     const baseProject = {
       ...typedData,
       technologies: (typedData.technologies as any)?.map((pt: any) => pt.technology).filter((t: any): t is Technology => t !== null && t !== undefined) || [],
       tags: (typedData.tags as any)?.map((pt: any) => pt.tag).filter((t: any): t is Tag => t !== null && t !== undefined) || [],
+      images: sortedImages,
       technology_ids,
       tag_ids,
     }
@@ -103,12 +107,14 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { technology_ids, tag_ids, translations, ...projectData } = body
+    const { technology_ids, tag_ids, translations, images, ...projectData } = body
 
     // Validate required fields
     if (!translations?.pt?.title) {
       return NextResponse.json({ error: 'Título (PT-BR) é obrigatório' }, { status: 400 })
     }
+
+    const projectId = parseInt(id)
 
     // Update the project (update legacy fields with PT translation)
     const { data: project, error: projectError } = await ((supabase
@@ -131,7 +137,7 @@ export async function PUT(
 
     // Update PT-BR translation (upsert)
     await (supabase.from('project_translations') as any).upsert({
-      project_id: parseInt(id),
+      project_id: projectId,
       language: 'pt-BR',
       title: translations.pt.title,
       subtitle: translations.pt.subtitle || null,
@@ -143,7 +149,7 @@ export async function PUT(
     // Handle EN translation
     if (translations.en?.title) {
       await (supabase.from('project_translations') as any).upsert({
-        project_id: parseInt(id),
+        project_id: projectId,
         language: 'en',
         title: translations.en.title,
         subtitle: translations.en.subtitle || null,
@@ -166,7 +172,7 @@ export async function PUT(
       
       if (technology_ids.length > 0) {
         const projectTechnologies = technology_ids.map((tech_id: number) => ({
-          project_id: parseInt(id),
+          project_id: projectId,
           technology_id: tech_id,
         }))
         await (supabase.from('project_technologies') as any).insert(projectTechnologies)
@@ -179,10 +185,55 @@ export async function PUT(
       
       if (tag_ids.length > 0) {
         const projectTags = tag_ids.map((tag_id: number) => ({
-          project_id: parseInt(id),
+          project_id: projectId,
           tag_id,
         }))
         await (supabase.from('project_tags') as any).insert(projectTags)
+      }
+    }
+
+    // Update gallery images if provided
+    if (images !== undefined) {
+      // Get existing images
+      const { data: existingImages } = await supabase
+        .from('project_images')
+        .select('id')
+        .eq('project_id', projectId)
+
+      const existingIds = existingImages?.map((img: any) => img.id) || []
+      const newImageIds = images.filter((img: any) => img.id).map((img: any) => img.id)
+      
+      // Delete images that are no longer in the list
+      const idsToDelete = existingIds.filter((id: number) => !newImageIds.includes(id))
+      if (idsToDelete.length > 0) {
+        await supabase
+          .from('project_images')
+          .delete()
+          .in('id', idsToDelete)
+      }
+
+      // Update or insert images
+      for (const img of images) {
+        if (img.id && existingIds.includes(img.id)) {
+          // Update existing image
+          await (supabase
+            .from('project_images') as any)
+            .update({
+              caption: img.caption || null,
+              display_order: img.display_order,
+            })
+            .eq('id', img.id)
+        } else {
+          // Insert new image
+          await (supabase
+            .from('project_images') as any)
+            .insert({
+              project_id: projectId,
+              image_url: img.image_url,
+              caption: img.caption || null,
+              display_order: img.display_order,
+            })
+        }
       }
     }
 
@@ -208,7 +259,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Translations are deleted automatically via CASCADE
+    // Translations and images are deleted automatically via CASCADE
     const { error } = await supabase
       .from('projects')
       .delete()

@@ -24,7 +24,9 @@ import {
 } from '@/components/ui/select'
 import { toast } from 'sonner'
 import { slugify } from '@/lib/utils/slugify'
-import type { Project, Technology, Tag, ProjectTranslation } from '@/lib/types/database'
+import { ImageUploader } from './image-uploader'
+import { GalleryManager, type GalleryImage } from './gallery-manager'
+import type { Project, Technology, Tag, ProjectTranslation, ProjectImage } from '@/lib/types/database'
 
 // Schema de tradução
 const translationSchema = z.object({
@@ -38,7 +40,6 @@ const translationSchema = z.object({
 // Schema do formulário
 const formSchema = z.object({
   slug: z.string().min(1, 'Slug é obrigatório'),
-  cover_image_url: z.string().url('URL inválida').optional().or(z.literal('')),
   repo_url: z.string().url('URL inválida').optional().or(z.literal('')),
   deploy_url: z.string().url('URL inválida').optional().or(z.literal('')),
   is_featured: z.boolean(),
@@ -57,7 +58,7 @@ interface ProjectFormProps {
   project?: Project & {
     technology_ids?: number[]
     tag_ids?: number[]
-    images?: any[]
+    images?: ProjectImage[]
     translations?: {
       pt?: ProjectTranslation
       en?: ProjectTranslation
@@ -75,6 +76,19 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
   )
   const [selectedTags, setSelectedTags] = useState<number[]>(project?.tag_ids || [])
   const [activeTab, setActiveTab] = useState<'pt' | 'en'>('pt')
+  
+  // Estados para imagens
+  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(
+    project?.cover_image_url || null
+  )
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(
+    project?.images?.map((img) => ({
+      id: img.id,
+      image_url: img.image_url,
+      caption: img.caption,
+      display_order: img.display_order,
+    })) || []
+  )
 
   const isEditing = !!project
 
@@ -111,7 +125,6 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       slug: project?.slug || '',
-      cover_image_url: project?.cover_image_url || '',
       repo_url: project?.repo_url || '',
       deploy_url: project?.deploy_url || '',
       is_featured: project?.is_featured || false,
@@ -151,7 +164,7 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
     try {
       const payload = {
         slug: data.slug,
-        cover_image_url: data.cover_image_url || null,
+        cover_image_url: coverImageUrl,
         repo_url: data.repo_url || null,
         deploy_url: data.deploy_url || null,
         is_featured: data.is_featured,
@@ -160,6 +173,12 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
         is_active: data.is_active,
         technology_ids: selectedTechnologies,
         tag_ids: selectedTags,
+        images: galleryImages.map((img, index) => ({
+          id: img.id,
+          image_url: img.image_url,
+          caption: img.caption,
+          display_order: index,
+        })),
         translations: {
           pt: {
             title: data.translations.pt.title,
@@ -290,7 +309,7 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
         <div className="flex gap-2">
           {isEditing && project?.slug && (
             <Button variant="outline" asChild>
-              <Link href={`/portfolio/${project.slug}`} target="_blank">
+              <Link href={`/projetos/${project.slug}`} target="_blank">
                 <Eye className="mr-2 h-4 w-4" />
                 Visualizar
               </Link>
@@ -370,21 +389,40 @@ export function ProjectForm({ project, technologies, tags }: ProjectFormProps) {
             </CardContent>
           </Card>
 
+          {/* Cover Image */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Imagem de Capa</CardTitle>
+              <CardDescription>
+                Imagem principal que aparece nos cards e no topo da página do projeto
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ImageUploader
+                value={coverImageUrl}
+                onChange={setCoverImageUrl}
+                bucket="projects"
+                folder="covers"
+                aspectRatio="video"
+                placeholder="Arraste ou clique para enviar a imagem de capa"
+              />
+            </CardContent>
+          </Card>
+
+          {/* Gallery */}
+          <GalleryManager
+            images={galleryImages}
+            onChange={setGalleryImages}
+            bucket="projects"
+            folder="gallery"
+          />
+
           {/* Links */}
           <Card>
             <CardHeader>
               <CardTitle>Links</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="cover_image_url">URL da Imagem de Capa</Label>
-                <Input
-                  id="cover_image_url"
-                  {...form.register('cover_image_url')}
-                  placeholder="https://..."
-                  type="url"
-                />
-              </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="repo_url">URL do Repositório</Label>

@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { technology_ids, tag_ids, translations, ...projectData } = body
+    const { technology_ids, tag_ids, translations, images, ...projectData } = body
 
     // Validate required fields
     if (!translations?.pt?.title || !projectData.slug) {
@@ -151,9 +151,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: projectError.message }, { status: 500 })
     }
 
+    const projectId = (project as any).id
+
     // Add PT-BR translation
     await (supabase.from('project_translations') as any).insert({
-      project_id: (project as any).id,
+      project_id: projectId,
       language: 'pt-BR',
       title: translations.pt.title,
       subtitle: translations.pt.subtitle || null,
@@ -165,7 +167,7 @@ export async function POST(request: NextRequest) {
     // Add EN translation if provided
     if (translations.en?.title) {
       await (supabase.from('project_translations') as any).insert({
-        project_id: (project as any).id,
+        project_id: projectId,
         language: 'en',
         title: translations.en.title,
         subtitle: translations.en.subtitle || null,
@@ -178,7 +180,7 @@ export async function POST(request: NextRequest) {
     // Add technologies if provided
     if (technology_ids && technology_ids.length > 0) {
       const projectTechnologies = technology_ids.map((tech_id: number) => ({
-        project_id: (project as any).id,
+        project_id: projectId,
         technology_id: tech_id,
       }))
       await supabase.from('project_technologies').insert(projectTechnologies)
@@ -187,10 +189,21 @@ export async function POST(request: NextRequest) {
     // Add tags if provided
     if (tag_ids && tag_ids.length > 0) {
       const projectTags = tag_ids.map((tag_id: number) => ({
-        project_id: (project as any).id,
+        project_id: projectId,
         tag_id,
       }))
       await supabase.from('project_tags').insert(projectTags)
+    }
+
+    // Add gallery images if provided
+    if (images && images.length > 0) {
+      const projectImages = images.map((img: any, index: number) => ({
+        project_id: projectId,
+        image_url: img.image_url,
+        caption: img.caption || null,
+        display_order: img.display_order ?? index,
+      }))
+      await supabase.from('project_images').insert(projectImages)
     }
 
     return NextResponse.json({ data: project }, { status: 201 })
