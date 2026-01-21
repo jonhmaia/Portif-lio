@@ -18,7 +18,7 @@ const socialLinks = [
   },
   {
     name: 'Email',
-    href: 'mailto:contato@joaomarcos.dev',
+    href: 'mailto:contato@maiainteligencia.com',
     icon: Mail,
     color: 'hover:text-primary',
   },

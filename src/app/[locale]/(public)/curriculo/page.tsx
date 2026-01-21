@@ -53,9 +53,9 @@ export default async function ResumePage() {
           </div>
           
           <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-            <a href="mailto:joaomaia@discente.ufg.br" className="flex items-center gap-2 hover:text-primary transition-colors">
+            <a href="mailto:contato@maiainteligencia.com" className="flex items-center gap-2 hover:text-primary transition-colors">
               <Mail className="h-4 w-4" />
-              joaomaia@discente.ufg.br
+              contato@maiainteligencia.com
             </a>
             <a href="tel:+5562999018119" className="flex items-center gap-2 hover:text-primary transition-colors">
               <Phone className="h-4 w-4" />

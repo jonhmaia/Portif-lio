@@ -39,8 +39,8 @@ export default function ContactPage() {
       {
         icon: Mail,
         label: t('info.email'),
-        value: 'contato@joaomarcos.dev',
-        href: 'mailto:contato@joaomarcos.dev',
+        value: 'contato@maiainteligencia.com',
+        href: 'mailto:contato@maiainteligencia.com',
         color: 'text-blue-500',
         bg: 'bg-blue-500/10',
       },

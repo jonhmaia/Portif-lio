@@ -295,7 +295,7 @@ Este projeto é privado e de propriedade de João Marcos.
 
 ## 📞 Contato
 
-- **Email:** joaomaia@discente.ufg.br
+- **Email:** contato@maiainteligencia.com
 - **Telefone:** (62) 99901-8119
 - **LinkedIn:** [linkedin.com/in/joaomarcosmaia](https://www.linkedin.com/in/joaomarcosmaia)
 - **GitHub:** [github.com/jonhmaia](https://github.com/jonhmaia)

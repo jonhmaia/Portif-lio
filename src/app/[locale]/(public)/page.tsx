@@ -53,11 +53,11 @@ export default async function Home() {
               
               {/* Contact Details */}
               <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-sm md:text-base text-muted-foreground/80 font-medium">
-                <a href="mailto:joaomaia@discente.ufg.br" className="flex items-center gap-2 hover:text-primary transition-colors group">
+                <a href="mailto:contato@maiainteligencia.com" className="flex items-center gap-2 hover:text-primary transition-colors group">
                   <div className="p-2 rounded-full bg-primary/5 group-hover:bg-primary/10 transition-colors">
                     <Mail className="h-4 w-4" />
                   </div>
-                  <span>joaomaia@discente.ufg.br</span>
+                  <span>contato@maiainteligencia.com</span>
                 </a>
                 <a href="tel:+5562999018119" className="flex items-center gap-2 hover:text-primary transition-colors group">
                    <div className="p-2 rounded-full bg-primary/5 group-hover:bg-primary/10 transition-colors">
