@@ -7,7 +7,6 @@ import { ThemeProvider } from '@/lib/providers/theme-provider'
 import { QueryProvider } from '@/lib/providers/query-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { routing, type Locale } from '@/i18n/routing'
-import { ThemeFavicon } from '@/components/layout'
 
 const inter = Inter({
   variable: "--font-sans",
@@ -82,7 +81,6 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <ThemeFavicon />
             <QueryProvider>
               {children}
               <Toaster position="top-right" />
