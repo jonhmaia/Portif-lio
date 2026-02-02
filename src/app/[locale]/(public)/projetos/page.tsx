@@ -4,7 +4,7 @@ import { FlowingLights } from '@/components/ui/flowing-lights'
 import { createClient } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
 import { getLocale } from 'next-intl/server'
-import { ProjectCard } from '@/components/portfolio/project-card'
+import { ProjectGrid } from '@/components/portfolio/project-grid'
 import type { ProjectWithRelations } from '@/lib/types/database'
 
 export const metadata: Metadata = {
@@ -89,15 +89,8 @@ export default async function ProjectsPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 pb-20">
-            {projects.map((project) => (
-              <div 
-                key={project.id} 
-                className="w-full"
-              >
-                <ProjectCard project={project} className="h-full" />
-              </div>
-            ))}
+          <div className="pb-20">
+            <ProjectGrid projects={projects} />
           </div>
         )}
       </section>
