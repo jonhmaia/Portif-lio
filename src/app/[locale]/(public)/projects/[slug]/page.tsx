@@ -306,17 +306,24 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeHighlight]}
                 components={{
-                  a: ({node, ...props}) => <a target="_blank" rel="noopener noreferrer" {...props} />,
-                  img: ({node, ...props}) => (
-                    <div className="relative aspect-video w-full my-8 rounded-xl overflow-hidden border border-border/50 shadow-md">
-                      <Image 
-                        src={props.src || ''} 
-                        alt={props.alt || ''} 
-                        fill 
-                        className="object-cover !m-0" 
-                      />
-                    </div>
-                  )
+                  a: ({ node, ...props }) => (
+                    <a target="_blank" rel="noopener noreferrer" {...props} />
+                  ),
+                  img: ({ node, ...props }: any) => {
+                    const src = typeof props.src === 'string' ? props.src : ''
+                    const alt = typeof props.alt === 'string' ? props.alt : ''
+
+                    return (
+                      <div className="relative aspect-video w-full my-8 rounded-xl overflow-hidden border border-border/50 shadow-md">
+                        <Image 
+                          src={src}
+                          alt={alt}
+                          fill 
+                          className="object-cover !m-0" 
+                        />
+                      </div>
+                    )
+                  }
                 }}
               >
                 {project.full_description}

@@ -84,11 +84,7 @@ export default async function ProjectsPage() {
             </h2>
             <div className="h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent flex-1 mx-6" />
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {featuredProjects.map((project: any) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+          <ProjectGrid projects={featuredProjects} />
         </section>
       )}
 
@@ -101,11 +97,7 @@ export default async function ProjectsPage() {
             </h2>
             <div className="h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent flex-1 mx-6" />
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {regularProjects.map((project: any) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+          <ProjectGrid projects={regularProjects} />
         </section>
       )}
 
