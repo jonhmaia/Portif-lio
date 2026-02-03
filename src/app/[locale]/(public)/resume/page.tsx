@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, getLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
+import type { Profile } from '@/lib/types/database'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -40,7 +41,7 @@ export default async function ResumePage() {
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('*')
-    .single()
+    .single() as { data: Profile | null; error: any }
 
   if (error || !profile) {
     console.error('Error fetching profile:', error)
