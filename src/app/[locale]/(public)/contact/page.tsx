@@ -26,6 +26,8 @@ function createContactSchema(t: (key: string) => string) {
 
 type ContactFormData = z.infer<ReturnType<typeof createContactSchema>>
 
+import { FlowingLights } from '@/components/ui/flowing-lights'
+
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const locale = useLocale()
@@ -41,24 +43,24 @@ export default function ContactPage() {
         label: t('info.email'),
         value: 'contato@maiainteligencia.com',
         href: 'mailto:contato@maiainteligencia.com',
-        color: 'text-blue-500',
-        bg: 'bg-blue-500/10',
+        color: 'text-[#00ffcc]',
+        bg: 'bg-[#00ffcc]/10',
       },
       {
         icon: Github,
         label: 'GitHub',
         value: '@jonhmaia',
         href: 'https://github.com/jonhmaia',
-        color: 'text-purple-500',
-        bg: 'bg-purple-500/10',
+        color: 'text-white',
+        bg: 'bg-white/10',
       },
       {
         icon: Linkedin,
         label: 'LinkedIn',
         value: '/in/joaomarcosmaia',
         href: 'https://www.linkedin.com/in/joaomarcosmaia',
-        color: 'text-blue-700',
-        bg: 'bg-blue-700/10',
+        color: 'text-[#0077b5]',
+        bg: 'bg-[#0077b5]/20',
       },
       {
         icon: MapPin,
@@ -117,107 +119,105 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container py-12 md:py-20 animate-in fade-in duration-500">
-      {/* Header */}
-      <div className="max-w-2xl mx-auto text-center mb-16">
-        <div className="inline-flex items-center justify-center p-2 mb-4 rounded-full bg-primary/10 text-primary">
-          <MessageSquare className="w-5 h-5 mr-2" />
-          <span className="text-sm font-medium font-mono uppercase tracking-wider">Get in Touch</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-          {t('subtitle')}
-        </p>
-      </div>
-
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-8 lg:gap-12">
-        {/* Contact Info Column */}
-        <div className="lg:col-span-5 space-y-6">
-          <Card className="border-border/50 shadow-lg bg-card/50 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-xl">
-                <User className="h-5 w-5 text-primary" />
-                {t('info.title')}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {contactInfo.map((info) => (
-                <div key={info.label} className="group flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors">
-                  <div className={cn("flex h-12 w-12 items-center justify-center rounded-xl transition-transform group-hover:scale-110", info.bg)}>
-                    <info.icon className={cn("h-6 w-6", info.color)} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">{info.label}</p>
-                    {info.href ? (
-                      <a
-                        href={info.href}
-                        target={info.href.startsWith('http') ? '_blank' : undefined}
-                        rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="font-semibold text-foreground hover:text-primary transition-colors flex items-center gap-1"
-                      >
-                        {info.value}
-                      </a>
-                    ) : (
-                      <p className="font-semibold text-foreground">{info.value}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Card className="bg-primary/5 border-primary/10">
-              <CardContent className="pt-6">
-                <div className="flex flex-col gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-500/10">
-                    <Clock className="h-5 w-5 text-green-500" />
-                  </div>
-                  <div>
-                    <p className="font-semibold mb-1">{t('responseTime.title')}</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {t('responseTime.description')}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-primary/5 border-primary/10">
-              <CardContent className="pt-6">
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </span>
-                    <span className="text-xs font-mono text-green-500 uppercase tracking-wider">Status</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold mb-1">{t('availability.title')}</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {t('availability.description')}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+    <div className="relative min-h-screen pt-24 md:pt-32 pb-12 flex flex-col">
+      <FlowingLights />
+      <div className="container relative z-10 flex-1 animate-in fade-in duration-500 max-w-6xl mx-auto">
+        <div className="bg-black/20 backdrop-blur-md shadow-2xl rounded-3xl p-8 md:p-12 border-none">
+          {/* Header */}
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white uppercase drop-shadow-lg">{t('title')}</h1>
+            <p className="text-white/60 text-lg md:text-xl leading-relaxed font-light">
+              {t('subtitle')}
+            </p>
           </div>
-        </div>
 
-        {/* Contact Form Column */}
-        <div className="lg:col-span-7">
-          <Card className="border-border/50 shadow-xl overflow-hidden relative">
-             <div className="absolute top-0 right-0 p-32 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-             <div className="absolute bottom-0 left-0 p-32 bg-blue-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-             
-            <CardHeader className="relative">
-              <CardTitle className="text-2xl">{t('form.title')}</CardTitle>
-              <CardDescription className="text-base">
-                {t('form.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="relative">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
+            {/* Contact Info Column */}
+            <div className="lg:col-span-5 space-y-6">
+              <Card className="border-none shadow-xl bg-black/20 backdrop-blur-md">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl text-white">
+                    <User className="h-5 w-5 text-[#00ffcc]" />
+                    {t('info.title')}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {contactInfo.map((info) => (
+                    <div key={info.label} className="group flex items-center gap-4 p-3 rounded-xl hover:bg-black/40 transition-colors">
+                      <div className={cn("flex h-12 w-12 items-center justify-center rounded-xl transition-transform group-hover:scale-110", info.bg)}>
+                        <info.icon className={cn("h-6 w-6", info.color)} />
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-1">{info.label}</p>
+                        {info.href ? (
+                          <a
+                            href={info.href}
+                            target={info.href.startsWith('http') ? '_blank' : undefined}
+                            rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                            className="font-semibold text-white hover:text-[#00ffcc] transition-colors flex items-center gap-1"
+                          >
+                            {info.value}
+                          </a>
+                        ) : (
+                          <p className="font-semibold text-white">{info.value}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Card className="bg-black/20 border-none shadow-xl backdrop-blur-md">
+                  <CardContent className="pt-6">
+                    <div className="flex flex-col gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#00ffcc]/10">
+                        <Clock className="h-5 w-5 text-[#00ffcc]" />
+                      </div>
+                      <div>
+                        <p className="font-semibold mb-1 text-white">{t('responseTime.title')}</p>
+                        <p className="text-xs text-white/50 leading-relaxed font-light">
+                          {t('responseTime.description')}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-black/20 border-none shadow-xl backdrop-blur-md">
+                  <CardContent className="pt-6">
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-2">
+                        <span className="relative flex h-3 w-3">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ffcc] opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00ffcc]"></span>
+                        </span>
+                        <span className="text-xs font-mono text-[#00ffcc] uppercase tracking-wider">Status</span>
+                      </div>
+                      <div>
+                        <p className="font-semibold mb-1 text-white">{t('availability.title')}</p>
+                        <p className="text-xs text-white/50 leading-relaxed font-light">
+                          {t('availability.description')}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Contact Form Column */}
+            <div className="lg:col-span-7">
+              <Card className="border-none shadow-2xl overflow-hidden relative bg-black/20 backdrop-blur-md">
+                <div className="absolute top-0 right-0 p-32 bg-[#00ffcc]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                
+                <CardHeader className="relative">
+                  <CardTitle className="text-2xl text-white">{t('form.title')}</CardTitle>
+                  <CardDescription className="text-base text-white/50 font-light">
+                    {t('form.description')}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="relative">
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -337,6 +337,8 @@ export default function ContactPage() {
             </CardContent>
           </Card>
         </div>
+      </div>
+      </div>
       </div>
     </div>
   )

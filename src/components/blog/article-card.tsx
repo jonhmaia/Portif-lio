@@ -19,7 +19,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
     .toUpperCase() || 'AU'
 
   return (
-    <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50 h-full flex flex-col">
+    <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-500 border-none bg-black/40 backdrop-blur-md h-full flex flex-col rounded-2xl hover:bg-black/60">
       {/* Cover Image */}
       <div className="relative aspect-[16/10] overflow-hidden bg-muted">
         {article.cover_image_url ? (
@@ -53,7 +53,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
 
       <CardHeader className="pb-3">
         <Link href={`/blog/${article.slug}` as any}>
-          <h3 className="text-xl font-bold hover:text-primary transition-colors line-clamp-2">
+          <h3 className="text-xl font-bold text-white hover:text-[#00ffcc] transition-colors line-clamp-2">
             {article.title}
           </h3>
         </Link>
@@ -61,7 +61,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
 
       <CardContent className="flex-1">
         {article.summary && (
-          <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
+          <p className="text-white/60 text-sm line-clamp-3 mb-4 font-light">
             {article.summary}
           </p>
         )}
@@ -73,13 +73,13 @@ export function ArticleCard({ article }: ArticleCardProps) {
               <Badge
                 key={tag.id}
                 variant="secondary"
-                className="text-xs"
+                className="text-xs bg-white/10 hover:bg-white/20 text-white border-none"
               >
                 {tag.name}
               </Badge>
             ))}
             {article.tags.length > 3 && (
-              <Badge variant="secondary" className="text-xs">
+              <Badge variant="secondary" className="text-xs bg-white/10 text-white border-none">
                 +{article.tags.length - 3}
               </Badge>
             )}
@@ -87,7 +87,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
         )}
       </CardContent>
 
-      <CardFooter className="pt-0 flex items-center justify-between gap-4 text-sm text-muted-foreground">
+      <CardFooter className="pt-0 flex items-center justify-between gap-4 text-sm text-white/50 font-light">
         {/* Author */}
         <div className="flex items-center gap-2">
           <Avatar className="h-6 w-6">

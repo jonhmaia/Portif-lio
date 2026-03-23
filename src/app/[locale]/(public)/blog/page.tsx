@@ -5,6 +5,7 @@ import { ArticleCard } from '@/components/blog/article-card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { FileText } from 'lucide-react'
 import { getLocale, getTranslations } from 'next-intl/server'
+import { FlowingLights } from '@/components/ui/flowing-lights'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -104,7 +105,7 @@ function ArticlesLoading() {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {[1, 2, 3, 4, 5, 6].map((i) => (
-        <div key={i} className="rounded-lg border border-border/50 overflow-hidden">
+        <div key={i} className="rounded-2xl border-none bg-black/40 overflow-hidden shadow-xl">
           <Skeleton className="aspect-[16/10] w-full" />
           <div className="p-4 space-y-3">
             <Skeleton className="h-6 w-3/4" />
@@ -129,19 +130,24 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const t = await getTranslations('blog')
 
   return (
-    <div className="container py-12 md:py-16">
-      {/* Header */}
-      <div className="mb-12 text-center max-w-2xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{t('title')}</h1>
-        <p className="text-muted-foreground text-lg">
-          {t('subtitle')}
-        </p>
-      </div>
+    <div className="relative min-h-screen pt-24 md:pt-32 pb-12 flex flex-col">
+      <FlowingLights />
+      <div className="container relative z-10 flex-1 animate-in fade-in duration-500 max-w-6xl mx-auto">
+        <div className="bg-black/20 backdrop-blur-md shadow-2xl rounded-3xl p-8 md:p-12 border-none">
+          {/* Header */}
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white uppercase drop-shadow-lg">{t('title')}</h1>
+            <p className="text-white/60 text-lg md:text-xl leading-relaxed font-light">
+              {t('subtitle')}
+            </p>
+          </div>
 
       {/* Articles Grid */}
       <Suspense fallback={<ArticlesLoading />}>
         <ArticlesGrid category={category} tag={tag} />
       </Suspense>
+        </div>
+      </div>
     </div>
   )
 }
