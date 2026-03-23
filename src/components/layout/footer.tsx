@@ -1,133 +1,187 @@
-import { Github, Linkedin, Mail, Code2, Heart } from 'lucide-react'
-import { Separator } from '@/components/ui/separator'
-import { useTranslations } from 'next-intl'
-import { Link } from '@/navigation'
+'use client'
 
-const socialLinks = [
-  {
-    name: 'GitHub',
-    href: 'https://github.com/jonhmaia',
-    icon: Github,
-    color: 'hover:text-gray-900 dark:hover:text-gray-100',
-  },
-  {
-    name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/joaomarcosmaia',
-    icon: Linkedin,
-    color: 'hover:text-blue-600 dark:hover:text-blue-400',
-  },
-  {
-    name: 'Email',
-    href: 'mailto:contato@maiainteligencia.com',
-    icon: Mail,
-    color: 'hover:text-primary',
-  },
-]
+import React from 'react'
+import Image from 'next/image'
+import { Link } from '@/navigation'
+import { Github, Linkedin, Mail } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function Footer() {
-  const currentYear = new Date().getFullYear()
   const t = useTranslations('footer')
+  const currentYear = new Date().getFullYear()
 
-  const footerLinks = [
-    {
-      title: t('sections.navigation'),
-      links: [
-        { name: t('links.home'), href: '/' },
-        { name: t('links.projects'), href: '/projetos' },
-        { name: t('links.blog'), href: '/blog' },
-        { name: t('links.resume'), href: '/curriculo' },
-        { name: t('links.contact'), href: '/contact' },
-      ],
-    },
-    {
-      title: t('sections.resources'),
-      links: [
-        { name: t('links.sitemap'), href: '/sitemap.xml' },
-        { name: t('links.admin'), href: '/admin' },
-      ],
-    },
-  ]
+  // Classes padrão de Glassmorphism para os cards iguais ao BioWrapper
+  const glassCardClasses = "bg-black/20 backdrop-blur-md shadow-2xl transition-all duration-500 overflow-hidden relative"
+  const glassCardHoverClasses = "hover:bg-black/30 hover:backdrop-blur-lg group"
 
   return (
-    <footer className="relative border-t border-border/40 bg-gradient-to-b from-background to-muted/20">
-      {/* Decorative gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent pointer-events-none" />
-      
-      <div className="container relative py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 mb-12">
-          {/* Brand */}
-          <div className="lg:col-span-2 space-y-6">
-            <Link 
-              href="/" 
-              className="inline-flex items-center gap-3 font-bold text-xl group transition-transform hover:scale-105"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/20 group-hover:shadow-primary/30 transition-all">
-                <Code2 className="h-5 w-5" />
+    <footer className="w-full bg-transparent py-10 md:py-20 px-4 md:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 md:gap-6">
+        
+        {/* Left Column */}
+        <div className="flex flex-col gap-4 md:gap-6 w-full md:w-1/2">
+          
+          {/* Top Left Box: Contact Card */}
+          <div className={`rounded-3xl p-8 md:p-10 flex flex-col justify-between ${glassCardClasses} ${glassCardHoverClasses}`}>
+            {/* Efeito Glow interno no hover */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00ffcc]/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            
+            <div className="space-y-1 mb-12 relative z-10">
+              <h2 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-tight">
+                Tem uma ideia?
+              </h2>
+              <h2 className="text-2xl md:text-4xl font-bold text-white/50 tracking-tight leading-tight">
+                Sinta-se livre para<br />me contatar
+              </h2>
+            </div>
+
+            {/* Pill Banner */}
+            <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-2 pl-4 rounded-full flex items-center justify-between transition-colors group-hover:border-white/20 relative z-10">
+              <div className="flex items-center gap-4">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/10">
+                  <Image 
+                    src="/foto.png" 
+                    alt="João Marcos" 
+                    fill 
+                    className="object-cover"
+                  />
+                </div>
+                <span className="text-xs md:text-sm text-white/80 font-medium hidden sm:block">
+                  Agende uma conversa com João
+                </span>
+                <span className="text-xs md:text-sm text-white/80 font-medium sm:hidden">
+                  Fale com João
+                </span>
               </div>
-              <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                João Marcos
-              </span>
-            </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-md">
-              {t('description')}
+              <a 
+                href="mailto:contato@maiainteligencia.com"
+                className="bg-[#00ffcc] hover:bg-white text-[#1a1a24] font-bold py-2 px-5 md:py-3 md:px-6 rounded-full text-xs md:text-sm transition-colors flex items-center gap-2"
+              >
+                Contato
+              </a>
+            </div>
+          </div>
+
+          {/* Bottom Left Box: Links & Copyright */}
+          <div className={`rounded-3xl p-8 md:p-10 flex flex-col justify-between flex-1 ${glassCardClasses} ${glassCardHoverClasses}`}>
+            <div className="mb-12 relative z-10">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-1">
+                Confira estes links
+              </h3>
+              <h3 className="text-xl md:text-2xl font-bold text-white/50">
+                antes de ir
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-3 gap-6 mb-16 relative z-10">
+              {/* Col 1 */}
+              <div className="flex flex-col gap-3">
+                <h4 className="text-white text-sm font-semibold mb-1">Páginas</h4>
+                <Link href="/" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">Home</Link>
+                <Link href="/projetos" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">Projetos</Link>
+                <Link href="/blog" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">Blog</Link>
+              </div>
+              {/* Col 2 */}
+              <div className="flex flex-col gap-3">
+                <h4 className="text-white text-sm font-semibold mb-1">Contato</h4>
+                <a href="mailto:contato@maiainteligencia.com" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">Email</a>
+                <a href="tel:+5562999018119" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">WhatsApp</a>
+                <Link href="/contact" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">Formulário</Link>
+              </div>
+              {/* Col 3 */}
+              <div className="flex flex-col gap-3">
+                <h4 className="text-white text-sm font-semibold mb-1">Legal</h4>
+                <Link href="/curriculo" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">Currículo</Link>
+                <a href="/sitemap.xml" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">Sitemap</a>
+                <Link href="/admin" className="text-white/60 hover:text-[#00ffcc] transition-colors text-xs font-medium">Admin</Link>
+              </div>
+            </div>
+
+            <p className="text-center text-white/30 text-[10px] md:text-xs mt-auto relative z-10 uppercase tracking-widest">
+              © Copyright {currentYear}, Todos os Direitos Reservados
             </p>
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                Conecte-se
-              </span>
-              <Separator orientation="vertical" className="h-4" />
-              <div className="flex items-center gap-3">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`relative flex h-10 w-10 items-center justify-center rounded-lg bg-muted/50 text-muted-foreground transition-all duration-200 hover:bg-muted hover:scale-110 hover:-translate-y-0.5 ${social.color}`}
-                    aria-label={social.name}
-                  >
-                    <social.icon className="h-5 w-5" />
-                  </a>
-                ))}
+          </div>
+
+        </div>
+
+        {/* Right Column */}
+        <div className="flex flex-col gap-4 md:gap-6 w-full md:w-1/2">
+          
+          {/* Top Right Box: Focus Areas */}
+          <div className={`rounded-3xl p-8 md:p-10 flex-1 ${glassCardClasses} ${glassCardHoverClasses}`}>
+            <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-16 max-w-sm relative z-10">
+              Você está lançando um novo Projeto / Startup?
+            </h2>
+
+            <div className="relative z-10">
+              <p className="text-white/40 text-[10px] md:text-xs mb-3 font-semibold uppercase tracking-wider">Áreas de atuação</p>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="flex flex-col gap-1">
+                  <span className="text-white font-medium text-xs">Soluções RPA</span>
+                  <span className="text-white/50 text-[10px]">Automação com N8N</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-white font-medium text-xs">Dev & Web App</span>
+                  <span className="text-white/50 text-[10px]">Sistemas e SaaS</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-white font-medium text-xs">AI Engineer</span>
+                  <span className="text-white/50 text-[10px]">LLMs & Agentes</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-white font-medium text-xs">Parcerias</span>
+                  <span className="text-white/50 text-[10px]">Consultoria técnica</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Links */}
-          {footerLinks.map((section) => (
-            <div key={section.title} className="space-y-4">
-              <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-foreground">
-                {section.title}
-              </h3>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href as any}
-                      className="group relative text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 inline-block"
-                    >
-                      <span className="relative z-10">{link.name}</span>
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Middle Right Row: Social Links */}
+          <div className="grid grid-cols-3 gap-4 md:gap-6">
+            <a 
+              href="https://github.com/jonhmaia" 
+              target="_blank" 
+              className={`rounded-3xl aspect-square flex items-center justify-center ${glassCardClasses} ${glassCardHoverClasses}`}
+            >
+              <Github className="w-10 h-10 text-white/50 group-hover:text-white transition-colors group-hover:scale-110 duration-300" />
+            </a>
+            <a 
+              href="https://www.linkedin.com/in/joaomarcosmaia" 
+              target="_blank" 
+              className={`rounded-3xl aspect-square flex items-center justify-center ${glassCardClasses} ${glassCardHoverClasses}`}
+            >
+              <Linkedin className="w-10 h-10 text-white/50 group-hover:text-[#0077b5] transition-colors group-hover:scale-110 duration-300" />
+            </a>
+            <a 
+              href="mailto:contato@maiainteligencia.com" 
+              className={`rounded-3xl aspect-square flex items-center justify-center ${glassCardClasses} ${glassCardHoverClasses}`}
+            >
+              <Mail className="w-10 h-10 text-white/50 group-hover:text-[#ea4335] transition-colors group-hover:scale-110 duration-300" />
+            </a>
+          </div>
+
+          {/* Bottom Right Box: Brand */}
+          <div className={`rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center gap-4 ${glassCardClasses} ${glassCardHoverClasses}`}>
+            <span className="relative z-10 text-white/40 text-[10px] md:text-xs font-semibold uppercase tracking-wider">
+              Conheça minha empresa
+            </span>
+            <a 
+              href="https://www.maiainteligencia.com.br/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="relative z-10 w-32 h-32 md:w-40 md:h-40 transition-transform duration-500 hover:scale-110 hover:rotate-3"
+            >
+              <Image 
+                src="/LOGO.svg" 
+                alt="Maia Inteligência" 
+                fill
+                className="object-contain drop-shadow-[0_0_20px_rgba(0,255,204,0.4)]"
+              />
+            </a>
+          </div>
+
         </div>
 
-        <Separator className="mb-8 bg-border/50" />
-
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
-          <p className="text-muted-foreground">
-            {t('copyright', { year: currentYear })}
-          </p>
-          <p className="flex items-center gap-2 text-muted-foreground">
-            <span>{t('madeWith')}</span>
-            <Heart className="h-4 w-4 text-red-500 fill-red-500 animate-pulse" />
-            <span>{t('using')}</span>
-          </p>
-        </div>
       </div>
     </footer>
   )
