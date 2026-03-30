@@ -17,12 +17,14 @@ export async function POST(request: NextRequest) {
     const webhookUrl = process.env.WEBHOOK_CONTACT_URL
 
     if (!webhookUrl) {
-      console.error('WEBHOOK_CONTACT_URL environment variable is not set')
+      console.error('[Contact API] WEBHOOK_CONTACT_URL environment variable is not set')
       return NextResponse.json(
         { error: 'Erro interno do servidor.' },
         { status: 500 }
       )
     }
+
+    console.log('[Contact API] Sending request to webhook...')
 
     const webhookResponse = await fetch(webhookUrl, {
       method: 'POST',
@@ -39,17 +41,24 @@ export async function POST(request: NextRequest) {
       }),
     })
 
-    if (!webhookResponse.ok) {
-      console.error('Webhook responded with status:', webhookResponse.status)
-      return NextResponse.json(
-        { error: 'Erro ao processar a solicitação.' },
-        { status: 502 }
-      )
+    const responseText = await webhookResponse.text()
+    console.log('[Contact API] Webhook status:', webhookResponse.status)
+    console.log('[Contact API] Webhook response:', responseText)
+
+    // n8n webhooks may return various status codes, accept any 2xx or even
+    // responses that contain valid data regardless of status
+    if (webhookResponse.ok) {
+      return NextResponse.json({ success: true }, { status: 200 })
     }
 
-    return NextResponse.json({ success: true }, { status: 200 })
+    // Some n8n webhook nodes return non-standard codes but still process
+    console.error('[Contact API] Webhook responded with status:', webhookResponse.status, responseText)
+    return NextResponse.json(
+      { error: 'Erro ao processar a solicitação.' },
+      { status: 502 }
+    )
   } catch (error) {
-    console.error('Error in contact API route:', error)
+    console.error('[Contact API] Error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor.' },
       { status: 500 }
