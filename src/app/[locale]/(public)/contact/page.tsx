@@ -89,7 +89,7 @@ export default function ContactPage() {
     setIsSubmitting(true)
     
     try {
-      const response = await fetch('https://n8n.maiainteligencia.cloud/webhook/f3f13315-af7f-4c0d-874d-e619f308e028', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
