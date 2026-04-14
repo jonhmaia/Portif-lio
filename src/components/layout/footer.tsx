@@ -35,31 +35,14 @@ export function Footer() {
               </h2>
             </div>
 
-            {/* Pill Banner */}
-            <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-2 pl-4 rounded-full flex items-center justify-between transition-colors group-hover:border-white/20 relative z-10">
-              <div className="flex items-center gap-4">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/10">
-                  <Image 
-                    src="/foto.png" 
-                    alt="João Marcos" 
-                    fill 
-                    className="object-cover"
-                  />
-                </div>
-                <span className="text-xs md:text-sm text-white/80 font-medium hidden sm:block">
-                  Agende uma conversa com João
-                </span>
-                <span className="text-xs md:text-sm text-white/80 font-medium sm:hidden">
-                  Fale com João
-                </span>
-              </div>
-              <a 
-                href="mailto:contato@maiainteligencia.com"
-                className="bg-[#00ffcc] hover:bg-white text-[#1a1a24] font-bold py-2 px-5 md:py-3 md:px-6 rounded-full text-xs md:text-sm transition-colors flex items-center gap-2"
-              >
-                Contato
-              </a>
-            </div>
+            {/* Botão de Contato */}
+            <Link 
+              href="/contact"
+              className="inline-flex items-center justify-center gap-3 bg-[#00ffcc] hover:bg-white text-[#1a1a24] font-bold py-3 px-8 md:py-4 md:px-10 rounded-full text-sm md:text-base transition-all duration-300 shadow-[0_0_20px_rgba(0,255,204,0.3)] hover:shadow-[0_0_30px_rgba(0,255,204,0.5)] hover:scale-105 relative z-10 w-fit"
+            >
+              <Mail className="w-5 h-5" />
+              Entrar em Contato
+            </Link>
           </div>
 
           {/* Bottom Left Box: Links & Copyright */}

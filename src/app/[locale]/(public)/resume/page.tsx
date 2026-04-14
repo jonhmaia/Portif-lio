@@ -266,9 +266,11 @@ export default async function ResumePage() {
 
             {/* Download Button */}
             <div className="flex justify-center pt-8">
-              <Button size="lg" className="gap-2">
-                <Download className="h-4 w-4" />
-                {t('downloadResume')}
+              <Button size="lg" className="gap-2" asChild>
+                <a href={locale === 'en' ? '/curriculo-en.pdf' : '/curriculo-pt.pdf'} download={locale === 'en' ? 'resume.pdf' : 'curriculo.pdf'}>
+                  <Download className="h-4 w-4" />
+                  {t('downloadResume')}
+                </a>
               </Button>
             </div>
           </div>

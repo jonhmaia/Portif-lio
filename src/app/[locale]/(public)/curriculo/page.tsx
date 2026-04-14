@@ -27,7 +27,7 @@ export default async function ResumePage() {
   const t = await getTranslations('resume')
   
   // Define o caminho do PDF baseado no idioma
-  const pdfPath = locale === 'en' ? '/Curriculo-En.pdf' : '/Curriculo-Pt.pdf'
+  const pdfPath = locale === 'en' ? '/curriculo-en.pdf' : '/curriculo-pt.pdf'
 
   return (
     <div className="container py-12 md:py-16 max-w-4xl">
@@ -69,7 +69,7 @@ export default async function ResumePage() {
 
           <div className="flex gap-3 pt-2">
             <Button size="sm" className="gap-2" asChild>
-              <a href={pdfPath} download>
+              <a href={pdfPath} download={locale === 'en' ? 'resume.pdf' : 'curriculo.pdf'}>
                 <Download className="h-4 w-4" />
                 {t('downloadPdf')}
               </a>
