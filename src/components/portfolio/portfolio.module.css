@@ -948,6 +948,10 @@
   transition: color 180ms ease !important;
 }
 
+.tabLabelShort {
+  display: none;
+}
+
 .tabTrigger:last-child {
   border-right: 0 !important;
 }
@@ -1549,9 +1553,18 @@
   }
 
   .tabTrigger {
-    min-width: 10rem;
+    min-width: 0;
+    flex: 1 1 0;
     border-right: 1px solid rgba(9, 10, 9, 0.23) !important;
     border-bottom: 0 !important;
+  }
+
+  .tabLabelFull {
+    display: none;
+  }
+
+  .tabLabelShort {
+    display: inline;
   }
 
   .editorialSection {

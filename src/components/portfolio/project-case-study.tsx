@@ -345,15 +345,25 @@ export async function ProjectCaseStudy({ params }: ProjectPageProps) {
                   {t('tabs.details')}
                 </TabsTrigger>
                 {hasDiagrams && (
-                  <TabsTrigger value="diagrams" className={styles.tabTrigger}>
+                  <TabsTrigger
+                    value="diagrams"
+                    className={styles.tabTrigger}
+                    aria-label={t('tabs.diagrams')}
+                  >
                     <Code2 size={15} />
-                    {t('tabs.diagrams')}
+                    <span className={styles.tabLabelFull}>{t('tabs.diagrams')}</span>
+                    <span className={styles.tabLabelShort}>{t('tabs.diagramsShort')}</span>
                   </TabsTrigger>
                 )}
                 {hasDownloads && (
-                  <TabsTrigger value="downloads" className={styles.tabTrigger}>
+                  <TabsTrigger
+                    value="downloads"
+                    className={styles.tabTrigger}
+                    aria-label={t('tabs.downloads')}
+                  >
                     <Download size={15} />
-                    {t('tabs.downloads')}
+                    <span className={styles.tabLabelFull}>{t('tabs.downloads')}</span>
+                    <span className={styles.tabLabelShort}>{t('tabs.downloadsShort')}</span>
                   </TabsTrigger>
                 )}
                 {hasGallery && (

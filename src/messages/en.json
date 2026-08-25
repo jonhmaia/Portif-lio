@@ -302,7 +302,9 @@
     "tabs": {
       "details": "Details",
       "diagrams": "Architecture & Diagrams",
+      "diagramsShort": "Diagrams",
       "downloads": "Files & Downloads",
+      "downloadsShort": "Downloads",
       "gallery": "Gallery"
     }
   },
